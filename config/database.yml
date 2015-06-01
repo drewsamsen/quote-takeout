@@ -12,15 +12,15 @@ default: &default
 
 development:
   <<: *default
-  database: valuemash2_development
+  database: quote_takeout_development
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
 # Do not set this db to the same as development or production.
 test:
   <<: *default
-  database: valuemash2_test
+  database: quote_takeout_test
 
 production:
   <<: *default
-  database: valuemash2_production
+  database: quote_takeout_production
