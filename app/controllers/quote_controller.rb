@@ -16,7 +16,7 @@ class QuoteController < ApplicationController
   end
 
   def create
-    @quote = @book.quote.create(body: params[:body])
+    @quote = @book.quotes.create(body: params[:body])
     respond_to do |format|
       format.json {
         render :json => {

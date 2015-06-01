@@ -27,6 +27,23 @@ angular.module('quoteTakeout')
         $scope.book = resp.data.book;
       }
     });
+  };
+
+  $scope.addQuote = function(bookId, quote) {
+    API.books.addQuote(bookId, quote)
+    .then(function(resp) {
+      if (resp.status === 200) {
+        Notifier.show('Success: Quote added');
+        $scope.bookQuotes.push(resp.data.quote);
+      }
+    })
   }
+
+  $scope.resetForm = function(form) {
+    if (form) {
+      form.$setPristine();
+      form.$setUntouched();
+    }
+  };
 
 });

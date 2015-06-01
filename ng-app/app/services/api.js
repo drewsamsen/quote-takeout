@@ -77,6 +77,14 @@ angular.module('quoteTakeout')
           method: 'GET',
           url: 'books/'+id+'/quotes.json'
         });
+      },
+
+      addQuote: function(bookId, quote) {
+        return _query({
+          method: 'POST',
+          url: 'books/'+bookId+'/quotes.json',
+          data: quote
+        });
       }
 
     }
