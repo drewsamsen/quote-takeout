@@ -70,16 +70,12 @@ angular.module('quoteTakeout')
           url: 'books/'+id+'.json',
           data: data
         });
-      }
+      },
 
-    },
-
-    match_results: {
-
-      all: function() {
+      getQuotes: function(id) {
         return _query({
           method: 'GET',
-          url: 'match_results.json'
+          url: 'books/'+id+'/quotes.json'
         });
       }
 

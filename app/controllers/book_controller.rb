@@ -17,7 +17,7 @@ class BookController < ApplicationController
   def create
     @book = Book.create(
       name: params[:name],
-      description: params[:description]
+      author: params[:author]
     )
     respond_to do |format|
       format.json {
@@ -41,7 +41,7 @@ class BookController < ApplicationController
 
   def update
     @book = Book.find(params[:id])
-    @book.update(name: params[:name], description: params[:description])
+    @book.update(name: params[:name], author: params[:author])
     respond_to do |format|
       format.json {
         render :json => {

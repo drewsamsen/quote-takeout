@@ -14,6 +14,9 @@ Rails.application.routes.draw do
   put 'books/:id' => 'book#update'
   post 'books' => 'book#create'
 
+  get 'books/:id/quotes' => 'quote#index'
+  post 'books/:id/quotes' => 'quote#create'
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 

@@ -18,10 +18,25 @@ h4
       .input-field.col.s6
         input(ng-model="book.author" type="text" required)
         label(ng-class="{active: book.author}")
-          | Description
+          | Author
 
     .row
       .input-field.col.s12
         button.waves-effect.waves-light.red.btn(type="submit"
           ng-class="{disabled: updateBookForm.$invalid}")
           | Update Book
+
+section
+  h4 Quotes
+
+  table.hoverable.bordered
+    tr.header.grey-text.text-lighten-1
+      th Quote
+      th ID
+
+    tr.body(ng-repeat="quote in bookQuotes")
+      td
+        i.fa.fa-quote-left.grey-text.text-lighten-2&nbsp;&nbsp;
+        | {{ quote.body }}&nbsp;&nbsp;
+        i.fa.fa-quote-right.grey-text.text-lighten-2
+      td {{ quote.id }}
