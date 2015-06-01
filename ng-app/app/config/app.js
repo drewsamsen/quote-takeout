@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('valueMash', [
+angular.module('quoteTakeout', [
     'ngAnimate',
     'ngTouch',
     'ngSanitize',
@@ -35,14 +35,14 @@ angular.module('valueMash', [
 
 })
 
-.run(function($rootScope, Notifier, $state, ENV, API_URL, Value) {
+.run(function($rootScope, Notifier, $state, ENV, API_URL, Book) {
 
   $rootScope.ENV = ENV;
   $rootScope.API_URL = API_URL;
 
-  // Get a reference to the Value service onto $rootScope so that it can be used
+  // Get a reference to the Book service onto $rootScope so that it can be used
   // directly from the views.
-  $rootScope.Value = Value;
+  $rootScope.Book = Book;
 
   /**
    * Check access for requested pages. Note the $auth.validateUser() in a state

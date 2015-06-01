@@ -1,0 +1,27 @@
+h4
+  a(href="" ui-sref="layout_app.books")
+    | Books
+  | - {{ book.name }}
+
+.row
+  form.col.s12(ng-if="user.admin"
+    name="updateBookForm"
+    ng-submit="updateBook(book)"
+    novalidate)
+
+    .row
+      .input-field.col.s6
+        input(ng-model="book.name" type="text" required)
+        label(ng-class="{active: book.name}")
+          | Name
+
+      .input-field.col.s6
+        input(ng-model="book.author" type="text" required)
+        label(ng-class="{active: book.author}")
+          | Description
+
+    .row
+      .input-field.col.s12
+        button.waves-effect.waves-light.red.btn(type="submit"
+          ng-class="{disabled: updateBookForm.$invalid}")
+          | Update Book

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('valueMash')
+angular.module('quoteTakeout')
 
 .service('API', function($http, $auth, Notifier, API_URL) {
 
@@ -40,19 +40,19 @@ angular.module('valueMash')
 
     },
 
-    values: {
+    books: {
 
       all: function() {
         return _query({
           method: 'GET',
-          url: 'values.json'
+          url: 'books.json'
         });
       },
 
       create: function(data) {
         return _query({
           method: 'POST',
-          url: 'values.json',
+          url: 'books.json',
           data: data
         });
       },
@@ -60,34 +60,16 @@ angular.module('valueMash')
       get: function(id) {
         return _query({
           method: 'GET',
-          url: 'values/'+id+'.json'
+          url: 'books/'+id+'.json'
         });
       },
 
       update: function(id, data) {
         return _query({
           method: 'PUT',
-          url: 'values/'+id+'.json',
+          url: 'books/'+id+'.json',
           data: data
         });
-      },
-
-      getPlayers: function() {
-        return _query({
-          method: 'GET',
-          url: 'values/players.json'
-        });
-      },
-
-      score: function(winnerValue, loserValue) {
-        return _query({
-          method: 'POST',
-          url: 'values/score.json',
-          data: {
-            winner: winnerValue,
-            loser: loserValue
-          }
-        })
       }
 
     },

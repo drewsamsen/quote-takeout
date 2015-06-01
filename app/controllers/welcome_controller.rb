@@ -1,9 +1,7 @@
 class WelcomeController < ActionController::Base
 
   def index
-    # @values = Value.count
-    # @matches = MatchResult.count
+    @book_count = Book.count
   end
-
 
 end

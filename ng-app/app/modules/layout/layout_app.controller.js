@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('valueMash')
+angular.module('quoteTakeout')
 
 .controller('LayoutAppCtrl', function($scope, $rootScope, $state) {
 

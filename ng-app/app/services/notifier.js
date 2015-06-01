@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('valueMash')
+angular.module('quoteTakeout')
 
 .service('Notifier', function() {
 

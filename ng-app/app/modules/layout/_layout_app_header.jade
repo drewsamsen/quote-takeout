@@ -4,11 +4,8 @@
       a(href="#" ui-sref="layout_app.dashboard")
         i.fa.fa-home.blue-text.text-lighten-5
     li(ui-sref-active-eq="blue lighten-1" ng-show="user.email")
-      a(ui-sref="layout_app.values.score")
-        i.fa.fa-gamepad.blue-text.text-lighten-5
-    li(ui-sref-active-eq="blue lighten-1" ng-show="user.email")
-      a(ui-sref="layout_app.values")
-        i.fa.fa-sort-amount-desc.blue-text.text-lighten-5
+      a(ui-sref="layout_app.books")
+        i.fa.fa-book.blue-text.text-lighten-5
 
   ul.right.hide-on-med-and-down
     li(ng-hide='user.signedIn')

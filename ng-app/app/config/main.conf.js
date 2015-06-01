@@ -10,7 +10,7 @@
  * Usage: gulp build --env=production
  */
 
-angular.module('valueMash')
+angular.module('quoteTakeout')
 
   .constant('ENV', '___env_name')
   .constant('API_URL', '___api_url')

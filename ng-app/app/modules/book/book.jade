@@ -1,0 +1,56 @@
+div(ui-view="")
+
+  section
+
+    h4.grey-text.text-darken-1
+      | Books
+
+  .divider(ng-style="{'margin-bottom': '50px'}")
+
+  section
+
+    table.hoverable.bordered
+      tr.header.grey-text.text-lighten-1
+        th Book
+        th Author
+        th ID
+
+      tr.body(ng-repeat="book in Book.books")
+        td
+          a(href="" ui-sref="layout_app.books.show({bookId: book.id})")
+            | {{ book.name }}
+        td {{ book.auth }}
+        td {{ book.id }}
+
+
+  a.btn.blue.lighten-5.blue-text.text-lighten-4(href=""
+    ng-click="addingNew = !addingNew" ng-style="{'margin-top': '25px'}")
+    | &nbsp;Add book&nbsp;
+    i.fa.fa-plus-circle.right
+
+  section(ng-if="user.admin" ng-show="addingNew")
+    .row
+      .col.s12
+        .card.blue.lighten-5
+          .card-content
+            span.card-title.blue-text
+              | Create new book
+
+            form.col.s12(name="newBookForm"
+              ng-submit="createBook(newBook);resetForm(newBookForm)"
+              novalidate)
+
+              .row
+                .input-field.col.s6
+                    input(ng-model="newBook.name" type="text" required)
+                    label Name
+
+                .input-field.col.s6
+                    input(ng-model="newBook.description" type="text" required)
+                    label Description
+
+              .row
+                .input-field.col.s12
+                  button.waves-effect.waves-light.blue.lighten-4.blue-text.btn(type="submit"
+                    ng-class="{disabled: newBookForm.$invalid}")
+                    | Create new Book

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('valueMash')
+angular.module('quoteTakeout')
   .controller('LoginCtrl', function ($scope, API, Notifier) {
 
     $scope.modalTest = function() {

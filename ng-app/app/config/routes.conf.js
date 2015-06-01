@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('valueMash')
+angular.module('quoteTakeout')
 
 .config(function($stateProvider, $urlRouterProvider) {
 
@@ -75,28 +75,16 @@ angular.module('valueMash')
     controller: 'UserCtrl'
   })
 
-  .state('layout_app.values', {
-    url: '/values',
-    templateUrl: 'modules/value/value.html',
-    controller: 'ValueCtrl'
+  .state('layout_app.books', {
+    url: '/books',
+    templateUrl: 'modules/book/book.html',
+    controller: 'BookCtrl'
   })
 
-  .state('layout_app.values.show', {
-    url: '/{valueId:[0-9]+}',
-    templateUrl: 'modules/value/value.show.html',
-    controller: 'ValueShowCtrl'
-  })
-
-  .state('layout_app.values.score', {
-    url: '/score',
-    templateUrl: 'modules/value/value.score.html',
-    controller: 'ValueScoreCtrl'
-  })
-
-  .state('layout_app.match_results', {
-    url: '/match_results',
-    templateUrl: 'modules/match_result/match_result.html',
-    controller: 'MatchResultCtrl'
+  .state('layout_app.books.show', {
+    url: '/{bookId:[0-9]+}',
+    templateUrl: 'modules/book/book.show.html',
+    controller: 'BookShowCtrl'
   });
 
 });

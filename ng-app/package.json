@@ -1,5 +1,5 @@
 {
-  "name": "valueMash",
+  "name": "quoteTakeout",
   "version": "0.0.1",
   "dependencies": {
     "angular-cookies": "^1.3.13"
