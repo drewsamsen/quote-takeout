@@ -10,26 +10,36 @@ h4
     novalidate)
 
     .row
-      .input-field.col.s6
+      .input-field.col.s4
         input(ng-model="book.name" type="text" required)
         label(ng-class="{active: book.name}")
           | Name
 
-      .input-field.col.s6
+      .input-field.col.s4
         input(ng-model="book.author" type="text" required)
         label(ng-class="{active: book.author}")
           | Author
 
+      .input-field.col.s4
+        input(ng-model="book.asin" type="text" required)
+        label(ng-class="{active: book.asin}")
+          | ASIN
+
     .row
       .input-field.col.s12
-        button.waves-effect.waves-light.red.btn(type="submit"
+        button.waves-effect.waves-light.blue.btn(type="submit"
           ng-class="{disabled: updateBookForm.$invalid}")
           | Update Book
 
-a.btn.blue.lighten-5.blue-text.text-lighten-4(href=""
-    ng-click="addingNew = !addingNew" ng-style="{'margin-top': '25px'}")
-    | &nbsp;Add quote&nbsp;
-    i.fa.fa-plus-circle.right
+a.btn.blue(href=""
+  ng-click="addingNew = !addingNew")
+  | &nbsp;Add single quote&nbsp;
+  i.fa.fa-plus-circle.right
+
+a.btn.green(href=""
+  ng-click="addingJson = !addingJson")
+  | &nbsp;Post JSON&nbsp;
+  i.fa.fa-code.right
 
 section(ng-if="user.admin" ng-show="addingNew")
   .row
@@ -54,18 +64,41 @@ section(ng-if="user.admin" ng-show="addingNew")
                   ng-class="{disabled: newQuoteForm.$invalid}")
                   | Add quote
 
+section(ng-if="user.admin" ng-show="addingJson")
+  .row
+    .col.s12
+      .card.blue.lighten-5
+        .card-content
+          span.card-title.blue-text
+            | Post some JSON
+
+          form.col.s12(name="newJsonPostForm"
+            ng-submit="addQuote(book.id, newJsonPost);resetForm(newJsonPostForm)"
+            novalidate)
+
+            .row
+              .input-field.col.s12
+                button.waves-effect.waves-light.blue.lighten-4.blue-text.btn(type="submit"
+                  ng-class="{disabled: newJsonPostForm.$invalid}")
+                  | Bulk add
+
+            .row
+              .input-field.col.s12
+                  textarea.materialize-textarea(ng-model="newJsonPost.body")
+                  label JSON
+
 
 section
-  h4 Quotes
+  h4 {{ quotesCount }} Quotes
 
   table.hoverable.bordered
     tr.header.grey-text.text-lighten-1
       th Quote
-      th ID
+      th Loc
 
     tr.body(ng-repeat="quote in bookQuotes")
       td
         i.fa.fa-quote-left.grey-text.text-lighten-2&nbsp;&nbsp;
         | {{ quote.body }}&nbsp;&nbsp;
         i.fa.fa-quote-right.grey-text.text-lighten-2
-      td {{ quote.id }}
+      td {{ quote.location }}

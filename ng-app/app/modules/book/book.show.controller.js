@@ -5,6 +5,7 @@ angular.module('quoteTakeout')
 .controller('BookShowCtrl', function($scope, API, $stateParams, Notifier) {
 
   $scope.book = {};
+  $scope.newJsonPost = {};
 
   API.books.get($stateParams.bookId)
   .then(function(resp) {
@@ -17,6 +18,7 @@ angular.module('quoteTakeout')
   .then(function(resp) {
     console.log('resp', resp);
     $scope.bookQuotes = resp.data.quotes;
+    $scope.quotesCount = resp.data.count;
   });
 
   $scope.updateBook = function(book) {
@@ -33,11 +35,20 @@ angular.module('quoteTakeout')
     API.books.addQuote(bookId, quote)
     .then(function(resp) {
       if (resp.status === 200) {
-        Notifier.show('Success: Quote added');
-        $scope.bookQuotes.push(resp.data.quote);
+        Notifier.show(
+          resp.data.summary.total + ' total, ' +
+          resp.data.summary.success + ' quotes added, ' +
+          resp.data.summary.duplicate + ' duplicates ignored, ' +
+          resp.data.summary.failure + ' failures',
+          7000
+        );
+        console.log('data', resp.data);
+        $scope.newJsonPost = {};
+        // TODO: re-order, by location
+        $scope.bookQuotes = $scope.bookQuotes.concat(resp.data.quotes);
       }
     })
-  }
+  };
 
   $scope.resetForm = function(form) {
     if (form) {

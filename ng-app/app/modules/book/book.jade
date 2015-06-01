@@ -19,7 +19,7 @@ div(ui-view="")
         td
           a(href="" ui-sref="layout_app.books.show({bookId: book.id})")
             | {{ book.name }}
-        td {{ book.auth }}
+        td {{ book.author }}
         td {{ book.id }}
 
 
@@ -41,13 +41,17 @@ div(ui-view="")
               novalidate)
 
               .row
-                .input-field.col.s6
-                    input(ng-model="newBook.name" type="text" required)
-                    label Name
+                .input-field.col.s4
+                  input(ng-model="newBook.name" type="text" required)
+                  label Name
 
-                .input-field.col.s6
-                    input(ng-model="newBook.author" type="text" required)
-                    label Author
+                .input-field.col.s4
+                  input(ng-model="newBook.author" type="text" required)
+                  label Author
+
+                .input-field.col.s4
+                  input(ng-model="newBook.asin" type="text" required)
+                  label ASIN
 
               .row
                 .input-field.col.s12

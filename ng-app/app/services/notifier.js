@@ -6,8 +6,9 @@ angular.module('quoteTakeout')
 
   var notifierService = {
 
-    show: function(message) {
-      Materialize.toast(message, 1800);
+    show: function(message, timeout) {
+      timeout = timeout || 1800;
+      Materialize.toast(message, timeout);
     }
 
   };
