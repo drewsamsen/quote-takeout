@@ -3,7 +3,8 @@ class BookController < ApplicationController
   before_filter :check_admin, only: [:create, :update]
 
   def index
-    @books = Book.all.order(created_at: :asc)
+    # Adds a 'quote_count' attribute
+    @books = Book.order(name: :asc).joins(:quotes).select('books.*, COUNT(quotes.id) as quote_count').group('books.id')
 
     respond_to do |format|
       format.json {

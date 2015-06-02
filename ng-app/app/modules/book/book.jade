@@ -13,15 +13,14 @@ div(ui-view="")
       tr.header.grey-text.text-lighten-1
         th Book
         th Author
-        th ID
+        th Quotes
 
       tr.body(ng-repeat="book in Book.books")
         td
           a(href="" ui-sref="layout_app.books.show({bookId: book.id})")
             | {{ book.name }}
         td {{ book.author }}
-        td {{ book.id }}
-
+        td {{ book.quote_count }}
 
   a.btn.blue.lighten-5.blue-text.text-lighten-4(href=""
     ng-click="addingNew = !addingNew" ng-style="{'margin-top': '25px'}")
