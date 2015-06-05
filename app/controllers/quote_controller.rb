@@ -6,15 +6,7 @@ class QuoteController < ApplicationController
 
   def index
     @quotes = @book.quotes.order(location: :asc)
-    @total = @quotes.count
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :quotes => @quotes,
-          :count => @total
-        }
-      }
-    end
+    respond_with(quotes: @quotes, count: @quotes.count)
   end
 
   def create
@@ -81,14 +73,8 @@ class QuoteController < ApplicationController
       @quotes = [@book.quotes.create(body: params[:body])]
     end
 
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :quotes => @quotes,
-          :summary => summary
-        }
-      }
-    end
+    respond_with(quotes: @quotes, summary: summary)
+
   end
 
   def destroy
@@ -100,13 +86,8 @@ class QuoteController < ApplicationController
 
       @quote.update(is_deleted: true, guid: guid)
     end
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :quote => @quote
-        }
-      }
-    end
+
+    respond_with(quote: @quote)
   end
 
   private

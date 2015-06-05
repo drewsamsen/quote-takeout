@@ -55,5 +55,7 @@ gem 'omniauth', '>= 1.0.0'
 
 gem 'rack-cors', :require => 'rack/cors'
 
+gem 'acts-as-taggable-on', '~> 3.4'
+
 # Used on Heroku
 ruby '2.2.0'
