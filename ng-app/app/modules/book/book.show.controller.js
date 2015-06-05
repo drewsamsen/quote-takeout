@@ -38,6 +38,7 @@ angular.module('quoteTakeout')
       if (resp.status === 200) {
         Notifier.show('Success: quote deleted');
         $scope.quotesCount -= 1;
+        $('#show-quote-modal').closeModal();
         for (var i = 0; i < $scope.bookQuotes.length; i++) {
           if ($scope.bookQuotes[i].id === quoteId) {
             $scope.bookQuotes[i].is_deleted = true;
