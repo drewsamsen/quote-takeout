@@ -99,7 +99,7 @@ section
 
     //- api will already return only quotes that are not deleted, but after
     //- the user deletes a quote, this will make it hidden from the list
-    tr.body(ng-repeat="quote in bookQuotes | filter:{is_deleted: false}")
+    tr.body(ng-repeat="quote in bookQuotes" ng-hide="quote.is_deleted")
       td
         i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;&nbsp;
         | {{ quote.body }} &nbsp;&nbsp;
