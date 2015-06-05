@@ -39,3 +39,13 @@ main {
     margin-right: 12px;
   }
 }
+.quote-body {
+  max-width: 675px;
+  padding: 20px 20px 20px 60px;
+  position: relative;
+  .fa-quote-left {
+    position: absolute;
+    left: 28px;
+    top: 28px;
+  }
+}

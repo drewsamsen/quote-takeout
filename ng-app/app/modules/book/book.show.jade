@@ -100,19 +100,18 @@ section
   table.hoverable.bordered
     tr.header.grey-text.text-lighten-1
       th Quote
-      th Loc
       th
 
     //- api will already return only quotes that are not deleted, but after
     //- the user deletes a quote, this will make it hidden from the list
     tr.body(ng-repeat="quote in bookQuotes" ng-hide="quote.is_deleted")
       td
-        i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;&nbsp;
-        | {{ quote.body }} &nbsp;&nbsp;
-        i.fa.fa-quote-right.grey-text.text-lighten-2
-      td {{ quote.location }}
+        p.quote-body.grey-text.text-darken-1.flow-text(style="margin-top:250px;margin-bottom:700px;")
+          i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;
+          | {{ quote.body }}&nbsp;
+          i.fa.fa-quote-right.grey-text.text-lighten-2
       td
-        a(href="javascript:void(0)" ng-click="showQuote(quote)")
+        a.grey-text.text-lighten-1(href="javascript:void(0)" ng-click="showQuote(quote)")
           i.fa.fa-external-link
 
 include _quote_show_modal
