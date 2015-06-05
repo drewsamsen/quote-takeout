@@ -5,7 +5,7 @@ class BookController < ApplicationController
 
   def index
     # Adds a 'quote_count' attribute
-    @books = Book.order(name: :asc).joins(:quotes).select('books.*, COUNT(quotes.id) as quote_count').group('books.id')
+    @books = Book.joins(:quotes).select('books.*, COUNT(quotes.id) as quote_count').group('books.id')
     respond_with(books: @books)
   end
 

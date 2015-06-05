@@ -5,7 +5,7 @@ class QuoteController < ApplicationController
   before_filter :check_admin, only: [:create, :destroy]
 
   def index
-    @quotes = @book.quotes.order(location: :asc)
+    @quotes = @book.quotes
     respond_with(quotes: @quotes, count: @quotes.count)
   end
 

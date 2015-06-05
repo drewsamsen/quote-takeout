@@ -3,7 +3,7 @@ class UserController < ApplicationController
   before_filter :check_admin
 
   def index
-    @users = User.all.order(created_at: :asc)
+    @users = User.all
     respond_with(users: @users)
   end
 
