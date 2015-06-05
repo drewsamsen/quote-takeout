@@ -13,6 +13,7 @@ angular.module('quoteTakeout')
   API.books.get($stateParams.bookId)
   .then(function(resp) {
     $scope.book = resp.data.book;
+    $scope.book.labels = resp.data.labels;
   });
 
   // TODO: build up cache of all this data on service object

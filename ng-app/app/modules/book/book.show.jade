@@ -41,6 +41,11 @@ a.btn.green(href=""
   | &nbsp;Post JSON&nbsp;
   i.fa.fa-code.right
 
+section
+  pre {{ book.labels | json }}
+
+.divider
+
 section(ng-if="user.admin" ng-show="addingNew")
   .row
     .col.s12
@@ -104,9 +109,7 @@ section
         i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;&nbsp;
         | {{ quote.body }} &nbsp;&nbsp;
         i.fa.fa-quote-right.grey-text.text-lighten-2
-      td
-        a(href="" ui-sref="layout_app.books.show.quote({bookId: book.id, quoteId: quote.id})")
-          | {{ quote.location }}
+      td {{ quote.location }}
       td
         a(href="javascript:void(0)" ng-click="showQuote(quote)")
           i.fa.fa-external-link
