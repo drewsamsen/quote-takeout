@@ -6,6 +6,9 @@ angular.module('quoteTakeout')
 
   $scope.book = {};
   $scope.newJsonPost = {};
+  $scope.selectedQuote = {};
+  $scope.bookQuotes = [];
+  $scope.quotesCount = 0;
 
   API.books.get($stateParams.bookId)
   .then(function(resp) {
@@ -48,6 +51,11 @@ angular.module('quoteTakeout')
         $scope.bookQuotes = $scope.bookQuotes.concat(resp.data.quotes);
       }
     })
+  };
+
+  $scope.showQuote = function(quoteId) {
+    $scope.selectedQuoteId = quoteId;
+    $('#show-quote-modal').openModal();
   };
 
   $scope.resetForm = function(form) {

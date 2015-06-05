@@ -1,0 +1,17 @@
+#show-quote-modal.modal
+  .modal-content
+    section
+      h5
+        i.fa.fa-book &nbsp;&nbsp;
+        | {{ book.name }}
+
+    .divider
+
+    section(ng-repeat="quote in bookQuotes | filter: {id: selectedQuoteId}")
+      p
+        i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;&nbsp;
+        | {{ quote.body }} &nbsp;&nbsp;
+        i.fa.fa-quote-right.grey-text.text-lighten-2
+
+  .modal-footer
+    a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") Close
