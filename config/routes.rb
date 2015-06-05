@@ -10,9 +10,12 @@ Rails.application.routes.draw do
   get 'users' => 'user#index'
 
   get 'books' => 'book#index'
+  get 'books/labels' => 'book#labels'
   get 'books/:id' => 'book#show'
   put 'books/:id' => 'book#update'
   post 'books' => 'book#create'
+
+
 
   get 'books/:id/quotes' => 'quote#index'
   post 'books/:id/quotes' => 'quote#create'

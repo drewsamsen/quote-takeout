@@ -8,6 +8,14 @@ angular.module('quoteTakeout')
 
   Book.getBooks();
 
+  // TODO: make labels service
+  API.books.getAllLabels()
+  .then(function(resp) {
+    if (resp.status === 200) {
+      $scope.bookLabels = resp.data.labels;
+    }
+  });
+
   $scope.createBook = function(data) {
     API.books.create(data)
     .then(function(resp) {

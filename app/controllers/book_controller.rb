@@ -6,7 +6,16 @@ class BookController < ApplicationController
   def index
     # Adds a 'quote_count' attribute
     @books = Book.joins(:quotes).select('books.*, COUNT(quotes.id) as quote_count').group('books.id')
-    respond_with(books: @books)
+
+    #
+    # Decorate each book with array of its labels:
+    #
+
+    # TODO 'attributes' is an expensive method, I think...
+    books_as_hashes = @books.to_a.map{ |v| v.attributes }
+    @books.each_with_index { |b,i| books_as_hashes[i]['labels'] = b.label_list }
+
+    respond_with(books: books_as_hashes)
   end
 
   def create
@@ -28,7 +37,18 @@ class BookController < ApplicationController
       author: params[:author],
       asin: params[:asin]
     )
+    if params[:labels]
+      @book.label_list = params[:labels] # eg: "tag1, tag 2, tag three"
+      @book.save
+    end
+    # Note that rails sends back a 204 with no content by detault.
+    # http://stackoverflow.com/questions/9953887/simple-respond-with-in-rails-that-avoids-204-from-put
     respond_with(book: @book)
+  end
+
+  def labels
+    @labels = ActsAsTaggableOn::Tag.all.map { |t| t.name }
+    respond_with(labels: @labels)
   end
 
   def book_params

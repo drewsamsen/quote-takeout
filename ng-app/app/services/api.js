@@ -92,6 +92,13 @@ angular.module('quoteTakeout')
           method: 'DELETE',
           url: 'books/'+bookId+'/quotes/'+quoteId+'.json'
         });
+      },
+
+      getAllLabels: function() {
+        return _query({
+          method: 'GET',
+          url: 'books/labels.json'
+        });
       }
 
     }

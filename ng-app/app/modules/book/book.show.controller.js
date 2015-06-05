@@ -26,11 +26,12 @@ angular.module('quoteTakeout')
   $scope.updateBook = function(book) {
     API.books.update(book.id, book)
     .then(function(resp) {
-      if (resp.status === 200) {
+      if (resp.status === 204) {
         Notifier.show('Success: Book updated');
-        $scope.book = resp.data.book;
       }
     });
+
+    // TODO: update book everywhere. Update Labels list everywhere.
   };
 
   $scope.deleteQuote = function(bookId, quoteId) {

@@ -27,6 +27,12 @@ h4
 
     .row
       .input-field.col.s12
+        input(ng-model="book.labels" type="text" required)
+        label(ng-class="{active: book.labels}")
+          | Labels
+
+    .row
+      .input-field.col.s12
         button.waves-effect.waves-light.blue.btn(type="submit"
           ng-class="{disabled: updateBookForm.$invalid}")
           | Update Book
@@ -40,11 +46,6 @@ a.btn.green(href=""
   ng-click="addingJson = !addingJson")
   | &nbsp;Post JSON&nbsp;
   i.fa.fa-code.right
-
-section
-  pre {{ book.labels | json }}
-
-.divider
 
 section(ng-if="user.admin" ng-show="addingNew")
   .row

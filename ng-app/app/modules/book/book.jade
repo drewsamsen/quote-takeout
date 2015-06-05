@@ -8,11 +8,22 @@ div(ui-view="")
   .divider(ng-style="{'margin-bottom': '50px'}")
 
   section
+    h5.grey-text.text-darken-1 Labels
+    p
+      span(ng-repeat="label in bookLabels")
+        | {{ label }}
+        span(ng-hide="$last")
+          | , &nbsp;
+
+  .divider(ng-style="{'margin-bottom': '50px'}")
+
+  section
 
     table.hoverable.bordered
       tr.header.grey-text.text-lighten-1
         th Book
         th Author
+        th Labels
         th Quotes
 
       tr.body(ng-repeat="book in Book.books")
@@ -20,6 +31,11 @@ div(ui-view="")
           a(href="" ui-sref="layout_app.books.show({bookId: book.id})")
             | {{ book.name }}
         td {{ book.author }}
+        td
+          span(ng-repeat="label in book.labels")
+            | {{ label }}
+            span(ng-hide="$last")
+              | , &nbsp;
         td {{ book.quote_count }}
 
   a.btn.blue.lighten-5.blue-text.text-lighten-4(href=""
