@@ -5,16 +5,16 @@ div(ui-view="")
     h4.grey-text.text-darken-1
       | Books
 
-  .divider(ng-style="{'margin-bottom': '50px'}")
+  .divider(ng-style="{'margin-bottom': '20px'}")
 
   section
-    h5.grey-text.text-darken-1 Labels
     p
       span(ng-repeat="label in bookLabels")
-        | {{ label }}
-        span(ng-hide="$last")
-          | , &nbsp;
-
+        a(href="" ng-click="toggleLabelFilter(label)")
+          i.fa(ng-class="{'fa-check-circle-o': filters.labels.indexOf(label) !== -1,'fa-circle-o': filters.labels.indexOf(label) === -1}") &nbsp;
+          | {{ label }}
+        span.grey-text(ng-hide="$last")
+          | ,&nbsp;&nbsp;
   .divider(ng-style="{'margin-bottom': '50px'}")
 
   section
@@ -26,7 +26,7 @@ div(ui-view="")
         th Labels
         th Quotes
 
-      tr.body(ng-repeat="book in Book.books")
+      tr.body(ng-repeat="book in Book.books" ng-hide="book.filteredOut")
         td
           a(href="" ui-sref="layout_app.books.show({bookId: book.id})")
             | {{ book.name }}

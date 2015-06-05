@@ -24,7 +24,14 @@ class BookController < ApplicationController
       author: params[:author],
       asin: params[:asin]
     )
-    respond_with(book: @book)
+    # Cannot use respond_with here. Because it is a create
+    respond_to do |format|
+      format.json {
+        render :json => {
+          :book => @book
+        }
+      }
+    end
   end
 
   def show
