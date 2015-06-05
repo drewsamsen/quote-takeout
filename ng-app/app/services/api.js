@@ -85,6 +85,13 @@ angular.module('quoteTakeout')
           url: 'books/'+bookId+'/quotes.json',
           data: quote
         });
+      },
+
+      deleteQuote: function(bookId, quoteId) {
+        return _query({
+          method: 'DELETE',
+          url: 'books/'+bookId+'/quotes/'+quoteId+'.json'
+        });
       }
 
     }

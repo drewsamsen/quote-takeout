@@ -1,12 +1,12 @@
 class QuoteController < ApplicationController
 
   before_filter :get_book
-  before_filter :ensure_book_found, only: [:index, :create]
-  before_filter :check_admin, only: [:create]
+  before_filter :ensure_book_found, only: [:index, :create, :destroy]
+  before_filter :check_admin, only: [:create, :destroy]
 
   def index
-    @quotes = @book.quotes.all.order(location: :asc)
-    @total = @book.quotes.count
+    @quotes = @book.quotes.order(location: :asc)
+    @total = @quotes.count
     respond_to do |format|
       format.json {
         render :json => {
@@ -91,10 +91,28 @@ class QuoteController < ApplicationController
     end
   end
 
+  def destroy
+    @quote = @book.quotes.find(params[:quote_id])
+    if @quote
+      # In dev, some quotes didnt have a guid, so this ensures it is set here
+      # TODO: remove this.
+      guid = @quote.guid || @quote.body.gsub(/[^a-zA-Z]/,'').upcase.first(20)
+
+      @quote.update(is_deleted: true, guid: guid)
+    end
+    respond_to do |format|
+      format.json {
+        render :json => {
+          :quote => @quote
+        }
+      }
+    end
+  end
+
   private
 
   def get_book
-    @book = Book.find(params[:id])
+    @book = Book.find(params[:id] || params[:book_id])
   end
 
   def ensure_book_found

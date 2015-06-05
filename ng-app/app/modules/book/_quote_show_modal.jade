@@ -7,11 +7,16 @@
 
     .divider
 
-    section(ng-repeat="quote in bookQuotes | filter: {id: selectedQuoteId}")
+    section
       p
         i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;&nbsp;
-        | {{ quote.body }} &nbsp;&nbsp;
+        | {{ selectedQuote.body }} &nbsp;&nbsp;
         i.fa.fa-quote-right.grey-text.text-lighten-2
 
   .modal-footer
-    a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="#!") Close
+    a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="javascript:void(0)")
+      | Close
+    a.modal-action.modal-close.text-red.waves-effect.waves-red.btn-flat.red-text.text-lighten-3(
+      href="javascript:void(0)" ng-click="deleteQuote(book.id, selectedQuote.id)")
+      i.fa.fa-trash &nbsp;
+      | Delete

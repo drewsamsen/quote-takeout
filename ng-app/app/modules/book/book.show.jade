@@ -97,7 +97,9 @@ section
       th Loc
       th
 
-    tr.body(ng-repeat="quote in bookQuotes")
+    //- api will already return only quotes that are not deleted, but after
+    //- the user deletes a quote, this will make it hidden from the list
+    tr.body(ng-repeat="quote in bookQuotes | filter:{is_deleted: false}")
       td
         i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;&nbsp;
         | {{ quote.body }} &nbsp;&nbsp;
@@ -106,7 +108,7 @@ section
         a(href="" ui-sref="layout_app.books.show.quote({bookId: book.id, quoteId: quote.id})")
           | {{ quote.location }}
       td
-        a(href="#" ng-click="showQuote(quote.id)")
+        a(href="javascript:void(0)" ng-click="showQuote(quote)")
           i.fa.fa-external-link
 
 include _quote_show_modal

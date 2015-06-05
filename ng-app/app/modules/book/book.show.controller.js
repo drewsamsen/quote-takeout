@@ -12,14 +12,12 @@ angular.module('quoteTakeout')
 
   API.books.get($stateParams.bookId)
   .then(function(resp) {
-    console.log('resp', resp);
     $scope.book = resp.data.book;
   });
 
   // TODO: build up cache of all this data on service object
   API.books.getQuotes($stateParams.bookId)
   .then(function(resp) {
-    console.log('resp', resp);
     $scope.bookQuotes = resp.data.quotes;
     $scope.quotesCount = resp.data.count;
   });
@@ -34,6 +32,22 @@ angular.module('quoteTakeout')
     });
   };
 
+  $scope.deleteQuote = function(bookId, quoteId) {
+    API.books.deleteQuote(bookId, quoteId)
+    .then(function(resp) {
+      if (resp.status === 200) {
+        Notifier.show('Success: quote deleted');
+        $scope.quotesCount -= 1;
+        for (var i = 0; i < $scope.bookQuotes.length; i++) {
+          if ($scope.bookQuotes[i].id === quoteId) {
+            $scope.bookQuotes[i].is_deleted = true;
+            break;
+          }
+        }
+      }
+    })
+  };
+
   $scope.addQuote = function(bookId, quote) {
     API.books.addQuote(bookId, quote)
     .then(function(resp) {
@@ -45,7 +59,6 @@ angular.module('quoteTakeout')
           resp.data.summary.failure + ' failures',
           7000
         );
-        console.log('data', resp.data);
         $scope.newJsonPost = {};
         // TODO: re-order, by location
         $scope.bookQuotes = $scope.bookQuotes.concat(resp.data.quotes);
@@ -53,8 +66,8 @@ angular.module('quoteTakeout')
     })
   };
 
-  $scope.showQuote = function(quoteId) {
-    $scope.selectedQuoteId = quoteId;
+  $scope.showQuote = function(quote) {
+    $scope.selectedQuote = quote;
     $('#show-quote-modal').openModal();
   };
 

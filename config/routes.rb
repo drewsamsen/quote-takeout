@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   get 'books/:id/quotes' => 'quote#index'
   post 'books/:id/quotes' => 'quote#create'
+  delete 'books/:book_id/quotes/:quote_id' => 'quote#destroy'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
