@@ -48,9 +48,21 @@ class BookController < ApplicationController
       @book.label_list = params[:labels] # eg: "tag1, tag 2, tag three"
       @book.save
     end
+
+    # Blaaah. TODO: standard way to decorate book with label list. Model callback?
+    book_as_hash = @book.attributes
+    book_as_hash['labels'] = @book.label_list
+
     # Note that rails sends back a 204 with no content by detault.
     # http://stackoverflow.com/questions/9953887/simple-respond-with-in-rails-that-avoids-204-from-put
-    respond_with(book: @book)
+    # Cannot use respond_with here. Because it is an update
+    respond_to do |format|
+      format.json {
+        render :json => {
+          :book => book_as_hash
+        }
+      }
+    end
   end
 
   def labels

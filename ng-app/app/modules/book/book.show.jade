@@ -1,34 +1,34 @@
 h4
   a(href="" ui-sref="layout_app.books")
     | Books
-  | - {{ book.name }}
+  | - {{ Book.book.name }}
 
 .row
   form.col.s12(ng-if="user.admin"
     name="updateBookForm"
-    ng-submit="updateBook(book)"
+    ng-submit="updateBook(Book.book)"
     novalidate)
 
     .row
       .input-field.col.s4
-        input(ng-model="book.name" type="text" required)
-        label(ng-class="{active: book.name}")
+        input(ng-model="Book.book.name" type="text" required)
+        label(ng-class="{active: Book.book.name}")
           | Name
 
       .input-field.col.s4
-        input(ng-model="book.author" type="text" required)
-        label(ng-class="{active: book.author}")
+        input(ng-model="Book.book.author" type="text" required)
+        label(ng-class="{active: Book.book.author}")
           | Author
 
       .input-field.col.s4
-        input(ng-model="book.asin" type="text" required)
-        label(ng-class="{active: book.asin}")
+        input(ng-model="Book.book.asin" type="text" required)
+        label(ng-class="{active: Book.book.asin}")
           | ASIN
 
     .row
       .input-field.col.s12
-        input(ng-model="book.labels" type="text" required)
-        label(ng-class="{active: book.labels}")
+        input(ng-model="Book.book.labels" type="text" required)
+        label(ng-class="{active: Book.book.labels}")
           | Labels
 
     .row
@@ -56,7 +56,7 @@ section(ng-if="user.admin" ng-show="addingNew")
             | Add quote to book
 
           form.col.s12(name="newQuoteForm"
-            ng-submit="addQuote(book.id, newQuote);resetForm(newQuoteForm)"
+            ng-submit="addQuote(Book.book.id, newQuote);resetForm(newQuoteForm)"
             novalidate)
 
             .row
@@ -79,7 +79,7 @@ section(ng-if="user.admin" ng-show="addingJson")
             | Post some JSON
 
           form.col.s12(name="newJsonPostForm"
-            ng-submit="addQuote(book.id, newJsonPost);resetForm(newJsonPostForm)"
+            ng-submit="addQuote(Book.book.id, newJsonPost);resetForm(newJsonPostForm)"
             novalidate)
 
             .row

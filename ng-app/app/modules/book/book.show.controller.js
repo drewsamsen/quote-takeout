@@ -2,19 +2,14 @@
 
 angular.module('quoteTakeout')
 
-.controller('BookShowCtrl', function($scope, API, $stateParams, Notifier) {
+.controller('BookShowCtrl', function($scope, Book, API, $stateParams, Notifier) {
 
-  $scope.book = {};
   $scope.newJsonPost = {};
   $scope.selectedQuote = {};
   $scope.bookQuotes = [];
   $scope.quotesCount = 0;
 
-  API.books.get($stateParams.bookId)
-  .then(function(resp) {
-    $scope.book = resp.data.book;
-    $scope.book.labels = resp.data.labels;
-  });
+  Book.bootstrap($stateParams.bookId);
 
   // TODO: build up cache of all this data on service object
   API.books.getQuotes($stateParams.bookId)
@@ -23,15 +18,9 @@ angular.module('quoteTakeout')
     $scope.quotesCount = resp.data.count;
   });
 
+  // TODO: just call bookService directly from view?
   $scope.updateBook = function(book) {
-    API.books.update(book.id, book)
-    .then(function(resp) {
-      if (resp.status === 204) {
-        Notifier.show('Success: Book updated');
-      }
-    });
-
-    // TODO: update book everywhere. Update Labels list everywhere.
+    Book.update(book.id, book);
   };
 
   $scope.deleteQuote = function(bookId, quoteId) {

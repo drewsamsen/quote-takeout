@@ -9,9 +9,9 @@ div(ui-view="")
 
   section
     p
-      span(ng-repeat="label in bookLabels")
-        a(href="" ng-click="toggleLabelFilter(label)")
-          i.fa(ng-class="{'fa-check-circle-o': filters.labels.indexOf(label) !== -1,'fa-circle-o': filters.labels.indexOf(label) === -1}") &nbsp;
+      span(ng-repeat="label in Book.labels")
+        a(href="" ng-click="Book.toggleLabelFilter(label)")
+          i.fa(ng-class="{'fa-check-circle-o': Book.filters.labels.indexOf(label) !== -1,'fa-circle-o': Book.filters.labels.indexOf(label) === -1}") &nbsp;
           | {{ label }}
         span.grey-text(ng-hide="$last")
           | ,&nbsp;&nbsp;
