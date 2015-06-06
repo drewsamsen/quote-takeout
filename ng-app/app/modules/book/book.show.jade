@@ -95,7 +95,7 @@ section(ng-if="user.admin" ng-show="addingJson")
 
 
 section
-  h4 {{ quotesCount }} Quotes
+  h4 {{ Quote.quotesCount }} Quotes
 
   table.hoverable.bordered
     tr.header.grey-text.text-lighten-1
@@ -104,7 +104,7 @@ section
 
     //- api will already return only quotes that are not deleted, but after
     //- the user deletes a quote, this will make it hidden from the list
-    tr.body(ng-repeat="quote in bookQuotes" ng-hide="quote.is_deleted")
+    tr.body(ng-repeat="quote in Quote.quotes" ng-hide="quote.is_deleted")
       td
         p.quote-body.grey-text.text-darken-1.flow-text(style="margin-top:250px;margin-bottom:700px;")
           i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;

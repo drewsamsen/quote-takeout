@@ -2,7 +2,7 @@
 
 angular.module('quoteTakeout')
 
-.service('Book', function(API, Notifier) {
+.service('Book', function(API, Notifier, Quote) {
 
   //
   // Begin private functions
@@ -41,6 +41,7 @@ angular.module('quoteTakeout')
 
   // Plucks the specified book from the books collection in memory
   var fetchBook = function(bookId) {
+    console.log('fetchBook from collection in memory');
     for (var i = 0; i < bookService.books.length; i++) {
       if (bookService.books[i].id === parseInt(bookId)) {
         bookService.book = bookService.books[i];
@@ -53,6 +54,7 @@ angular.module('quoteTakeout')
 
   // Do a real GET from the API
   var getBook = function(bookId) {
+    console.log('getBook from API');
     API.books.get(bookId)
     .then(function(resp) {
       bookService.book = resp.data.book;
@@ -91,12 +93,19 @@ angular.module('quoteTakeout')
 
     // If an ID is passed, get and set up individual book. Otherwise get all.
     bootstrap: function(id) {
+
+      // Get book
       if (id) {
         bookInMemory(id) ? fetchBook(id) : getBook(id);
+
+        // Get quotes for book
+        Quote.bootstrapBook(id);
+
       } else {
         bookService.getBooks();
         bookService.getLabels();
       }
+
     },
 
     getBooks: function() {

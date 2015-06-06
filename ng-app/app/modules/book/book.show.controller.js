@@ -2,7 +2,7 @@
 
 angular.module('quoteTakeout')
 
-.controller('BookShowCtrl', function($scope, Book, API, $stateParams, Notifier) {
+.controller('BookShowCtrl', function($scope, Book, API, Quote, $stateParams, Notifier) {
 
   $scope.newJsonPost = {};
   $scope.selectedQuote = {};
@@ -10,13 +10,6 @@ angular.module('quoteTakeout')
   $scope.quotesCount = 0;
 
   Book.bootstrap($stateParams.bookId);
-
-  // TODO: build up cache of all this data on service object
-  API.books.getQuotes($stateParams.bookId)
-  .then(function(resp) {
-    $scope.bookQuotes = resp.data.quotes;
-    $scope.quotesCount = resp.data.count;
-  });
 
   // TODO: just call bookService directly from view?
   $scope.updateBook = function(book) {
@@ -59,7 +52,7 @@ angular.module('quoteTakeout')
   };
 
   $scope.showQuote = function(quote) {
-    $scope.selectedQuote = quote;
+    Quote.quote = quote;
     $('#show-quote-modal').openModal();
   };
 

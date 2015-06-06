@@ -3,20 +3,20 @@
     section
       h5
         i.fa.fa-book &nbsp;&nbsp;
-        | {{ book.name }}
+        | {{ Book.book.name }}
 
     .divider
 
     section
       p.quote-body.grey-text.text-darken-1.flow-text
         i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;
-        | {{ selectedQuote.body }}&nbsp;
+        | {{ Quote.quote.body }}&nbsp;
         i.fa.fa-quote-right.grey-text.text-lighten-2
 
   .modal-footer
     a.modal-action.modal-close.waves-effect.waves-green.btn-flat(href="javascript:void(0)")
       | Close
     a.modal-action.text-red.waves-effect.waves-red.btn-flat.red-text.text-lighten-3(
-      href="" ng-click="deleteQuote(book.id, selectedQuote.id)")
+      href="" ng-click="deleteQuote(Book.book.id, Quote.quote.id)")
       i.fa.fa-trash &nbsp;
       | Delete

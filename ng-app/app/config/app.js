@@ -35,7 +35,7 @@ angular.module('quoteTakeout', [
 
 })
 
-.run(function($rootScope, Notifier, $state, ENV, API_URL, Book) {
+.run(function($rootScope, Notifier, $state, ENV, API_URL, Book, Quote) {
 
   $rootScope.ENV = ENV;
   $rootScope.API_URL = API_URL;
@@ -43,6 +43,7 @@ angular.module('quoteTakeout', [
   // Get a reference to the Book service onto $rootScope so that it can be used
   // directly from the views.
   $rootScope.Book = Book;
+  $rootScope.Quote = Quote;
 
   /**
    * Check access for requested pages. Note the $auth.validateUser() in a state
