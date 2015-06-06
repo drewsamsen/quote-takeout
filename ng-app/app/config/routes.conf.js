@@ -85,6 +85,12 @@ angular.module('quoteTakeout')
     url: '/{bookId:[0-9]+}',
     templateUrl: 'modules/book/book.show.html',
     controller: 'BookShowCtrl'
+  })
+
+  .state('layout_app.books.show.quote', {
+    url: '/quote/{quoteId:[0-9]+}',
+    templateUrl: 'modules/book/book.show.quote.html',
+    controller: 'BookShowCtrl'
   });
 
 });

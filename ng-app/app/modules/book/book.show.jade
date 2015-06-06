@@ -1,117 +1,120 @@
-h4
-  a(href="" ui-sref="layout_app.books")
-    | Books
-  | - {{ Book.book.name }}
+div(ui-view="")
 
-.row
-  form.col.s12(ng-if="user.admin"
-    name="updateBookForm"
-    ng-submit="updateBook(Book.book)"
-    novalidate)
+  h4
+    a(href="" ui-sref="layout_app.books")
+      | Books
+    | - {{ Book.book.name }}
 
-    .row
-      .input-field.col.s4
-        input(ng-model="Book.book.name" type="text" required)
-        label(ng-class="{active: Book.book.name}")
-          | Name
-
-      .input-field.col.s4
-        input(ng-model="Book.book.author" type="text" required)
-        label(ng-class="{active: Book.book.author}")
-          | Author
-
-      .input-field.col.s4
-        input(ng-model="Book.book.asin" type="text" required)
-        label(ng-class="{active: Book.book.asin}")
-          | ASIN
-
-    .row
-      .input-field.col.s12
-        input(ng-model="Book.book.labels" type="text" required)
-        label(ng-class="{active: Book.book.labels}")
-          | Labels
-
-    .row
-      .input-field.col.s12
-        button.waves-effect.waves-light.blue.btn(type="submit"
-          ng-class="{disabled: updateBookForm.$invalid}")
-          | Update Book
-
-a.btn.blue(href=""
-  ng-click="addingNew = !addingNew")
-  | &nbsp;Add single quote&nbsp;
-  i.fa.fa-plus-circle.right
-
-a.btn.green(href=""
-  ng-click="addingJson = !addingJson")
-  | &nbsp;Post JSON&nbsp;
-  i.fa.fa-code.right
-
-section(ng-if="user.admin" ng-show="addingNew")
   .row
-    .col.s12
-      .card.blue.lighten-5
-        .card-content
-          span.card-title.blue-text
-            | Add quote to book
+    form.col.s12(ng-if="user.admin"
+      name="updateBookForm"
+      ng-submit="updateBook(Book.book)"
+      novalidate)
 
-          form.col.s12(name="newQuoteForm"
-            ng-submit="addQuote(Book.book.id, newQuote);resetForm(newQuoteForm)"
-            novalidate)
+      .row
+        .input-field.col.s4
+          input(ng-model="Book.book.name" type="text" required)
+          label(ng-class="{active: Book.book.name}")
+            | Name
 
-            .row
-              .input-field.col.s12
-                  textarea.materialize-textarea(ng-model="newQuote.body")
-                  label Body
+        .input-field.col.s4
+          input(ng-model="Book.book.author" type="text" required)
+          label(ng-class="{active: Book.book.author}")
+            | Author
 
-            .row
-              .input-field.col.s12
-                button.waves-effect.waves-light.blue.lighten-4.blue-text.btn(type="submit"
-                  ng-class="{disabled: newQuoteForm.$invalid}")
-                  | Add quote
+        .input-field.col.s4
+          input(ng-model="Book.book.asin" type="text" required)
+          label(ng-class="{active: Book.book.asin}")
+            | ASIN
 
-section(ng-if="user.admin" ng-show="addingJson")
-  .row
-    .col.s12
-      .card.blue.lighten-5
-        .card-content
-          span.card-title.blue-text
-            | Post some JSON
+      .row
+        .input-field.col.s12
+          input(ng-model="Book.book.labels" type="text" required)
+          label(ng-class="{active: Book.book.labels}")
+            | Labels
 
-          form.col.s12(name="newJsonPostForm"
-            ng-submit="addQuote(Book.book.id, newJsonPost);resetForm(newJsonPostForm)"
-            novalidate)
+      .row
+        .input-field.col.s12
+          button.waves-effect.waves-light.blue.btn(type="submit"
+            ng-class="{disabled: updateBookForm.$invalid}")
+            | Update Book
 
-            .row
-              .input-field.col.s12
-                button.waves-effect.waves-light.blue.lighten-4.blue-text.btn(type="submit"
-                  ng-class="{disabled: newJsonPostForm.$invalid}")
-                  | Bulk add
+  a.btn.blue(href=""
+    ng-click="addingNew = !addingNew")
+    | &nbsp;Add single quote&nbsp;
+    i.fa.fa-plus-circle.right
 
-            .row
-              .input-field.col.s12
-                  textarea.materialize-textarea(ng-model="newJsonPost.body")
-                  label JSON
+  a.btn.green(href=""
+    ng-click="addingJson = !addingJson")
+    | &nbsp;Post JSON&nbsp;
+    i.fa.fa-code.right
+
+  section(ng-if="user.admin" ng-show="addingNew")
+    .row
+      .col.s12
+        .card.blue.lighten-5
+          .card-content
+            span.card-title.blue-text
+              | Add quote to book
+
+            form.col.s12(name="newQuoteForm"
+              ng-submit="addQuote(Book.book.id, newQuote);resetForm(newQuoteForm)"
+              novalidate)
+
+              .row
+                .input-field.col.s12
+                    textarea.materialize-textarea(ng-model="newQuote.body")
+                    label Body
+
+              .row
+                .input-field.col.s12
+                  button.waves-effect.waves-light.blue.lighten-4.blue-text.btn(type="submit"
+                    ng-class="{disabled: newQuoteForm.$invalid}")
+                    | Add quote
+
+  section(ng-if="user.admin" ng-show="addingJson")
+    .row
+      .col.s12
+        .card.blue.lighten-5
+          .card-content
+            span.card-title.blue-text
+              | Post some JSON
+
+            form.col.s12(name="newJsonPostForm"
+              ng-submit="addQuote(Book.book.id, newJsonPost);resetForm(newJsonPostForm)"
+              novalidate)
+
+              .row
+                .input-field.col.s12
+                  button.waves-effect.waves-light.blue.lighten-4.blue-text.btn(type="submit"
+                    ng-class="{disabled: newJsonPostForm.$invalid}")
+                    | Bulk add
+
+              .row
+                .input-field.col.s12
+                    textarea.materialize-textarea(ng-model="newJsonPost.body")
+                    label JSON
 
 
-section
-  h4 {{ Quote.quotesCount }} Quotes
+  section
+    h4 {{ Quote.quotesCount }} Quotes
 
-  table.hoverable.bordered
-    tr.header.grey-text.text-lighten-1
-      th Quote
-      th
+    table.hoverable.bordered
+      tr.header.grey-text.text-lighten-1
+        th Quote
+        th
 
-    //- api will already return only quotes that are not deleted, but after
-    //- the user deletes a quote, this will make it hidden from the list
-    tr.body(ng-repeat="quote in Quote.quotes" ng-hide="quote.is_deleted")
-      td
-        p.quote-body.grey-text.text-darken-1.flow-text(style="margin-top:250px;margin-bottom:700px;")
-          i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;
-          | {{ quote.body }}&nbsp;
-          i.fa.fa-quote-right.grey-text.text-lighten-2
-      td
-        a.grey-text.text-lighten-1(href="javascript:void(0)" ng-click="showQuote(quote)")
-          i.fa.fa-external-link
+      //- api will already return only quotes that are not deleted, but after
+      //- the user deletes a quote, this will make it hidden from the list
+      tr.body(ng-repeat="quote in Quote.quotes" ng-hide="quote.is_deleted")
+        td
+          p.quote-body.grey-text.text-darken-1
+            i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;
+            | {{ quote.body }}&nbsp;
+            i.fa.fa-quote-right.grey-text.text-lighten-2
+        td
+          a.grey-text.text-lighten-1(href="javascript:void(0)" ng-click="showQuote(quote)")
+            i.fa.fa-external-link
+          a(href="" ui-sref="layout_app.books.show.quote({quoteId: quote.id})") | Permalink
 
-include _quote_show_modal
+  include _quote_show_modal

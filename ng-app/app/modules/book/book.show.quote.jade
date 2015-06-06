@@ -1,0 +1,15 @@
+section
+  h4
+    a(href="" ui-sref="layout_app.books")
+      | Books
+    span.grey-text.text-lighten-2 &nbsp;>&nbsp;
+    a(href="" ui-sref="layout_app.books.show({bookId: Book.book.id})")
+      | {{ Book.book.name }}
+
+.divider
+
+section
+  p.quote-body.grey-text.text-darken-1.flow-text(style="margin-top:95px;margin-bottom:170px;")
+    i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;
+    | {{ Quote.quote.body }}&nbsp;
+    i.fa.fa-quote-right.grey-text.text-lighten-2

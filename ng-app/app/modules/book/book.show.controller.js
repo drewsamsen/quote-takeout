@@ -9,7 +9,8 @@ angular.module('quoteTakeout')
   $scope.bookQuotes = [];
   $scope.quotesCount = 0;
 
-  Book.bootstrap($stateParams.bookId);
+  // quoteId is optionally present when showing an individual quote
+  Book.bootstrap($stateParams.bookId, $stateParams.quoteId);
 
   // TODO: just call bookService directly from view?
   $scope.updateBook = function(book) {

@@ -92,14 +92,16 @@ angular.module('quoteTakeout')
     },
 
     // If an ID is passed, get and set up individual book. Otherwise get all.
-    bootstrap: function(id) {
+    // Optional quoteId can be passed in if we need to pull out a specific
+    // quote, like on quote#show
+    bootstrap: function(bookId, quoteId) {
 
       // Get book
-      if (id) {
-        bookInMemory(id) ? fetchBook(id) : getBook(id);
+      if (bookId) {
+        bookInMemory(bookId) ? fetchBook(bookId) : getBook(bookId);
 
-        // Get quotes for book
-        Quote.bootstrapBook(id);
+        // Get quotes for book, optionally a specific quote if quoteId present
+        Quote.bootstrapBook(bookId, quoteId);
 
       } else {
         bookService.getBooks();
