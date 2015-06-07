@@ -2,7 +2,8 @@
 
 angular.module('quoteTakeout')
 
-.controller('BookShowCtrl', function($scope, Book, API, Quote, $stateParams, Notifier) {
+.controller('BookShowCtrl', function($scope, Book, API, Quote, $stateParams,
+  Notifier, hotkeys) {
 
   $scope.newJsonPost = {};
   $scope.selectedQuote = {};
@@ -11,6 +12,18 @@ angular.module('quoteTakeout')
 
   // quoteId is optionally present when showing an individual quote
   Book.bootstrap($stateParams.bookId, $stateParams.quoteId);
+
+  hotkeys.bindTo($scope)
+  .add({
+    combo: 'right',
+    description: 'Next quote in book',
+    callback: function() { Quote.next() }
+  })
+  .add({
+    combo: 'left',
+    description: 'Previous quote in book',
+    callback: function() { Quote.previous() }
+  });
 
   // TODO: just call bookService directly from view?
   $scope.updateBook = function(book) {
