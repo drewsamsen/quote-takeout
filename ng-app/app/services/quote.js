@@ -2,7 +2,7 @@
 
 angular.module('quoteTakeout')
 
-.service('Quote', function(API, Notifier) {
+.service('Quote', function(API, Notifier, $state) {
 
   //
   // Begin private functions
@@ -75,39 +75,43 @@ angular.module('quoteTakeout')
     },
 
     next: function() {
+      var newIndex, newQuoteId;
+
       if (quoteService.quotes &&
         angular.isArray(quoteService.quotes) &&
         quoteService.quotes.length > 0 &&
         quoteService.quote &&
         angular.isDefined(quoteService.quote.index)) {
 
-        var newIndex = parseInt(quoteService.quote.index) + 1;
+        newIndex = parseInt(quoteService.quote.index) + 1;
 
         if (newIndex >= quoteService.quotes.length) {
           Notifier.show('This is the last quote in the book.');
         } else {
           console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
-          quoteService.quote = quoteService.quotes[newIndex];
-          quoteService.quote.index = newIndex;
+          newQuoteId = quoteService.quotes[newIndex].id;
+          $state.go('layout_app.books.show.quote', {quoteId: newQuoteId});
         }
       }
     },
 
     previous: function() {
+      var newIndex, newQuoteId;
+
       if (quoteService.quotes &&
         angular.isArray(quoteService.quotes) &&
         quoteService.quotes.length > 0 &&
         quoteService.quote &&
         angular.isDefined(quoteService.quote.index)) {
 
-        var newIndex = parseInt(quoteService.quote.index) - 1;
+        newIndex = parseInt(quoteService.quote.index) - 1;
 
         if (newIndex < 0) {
           Notifier.show('This is the first quote in the book.');
         } else {
           console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
-          quoteService.quote = quoteService.quotes[newIndex];
-          quoteService.quote.index = newIndex;
+          newQuoteId = quoteService.quotes[newIndex].id;
+          $state.go('layout_app.books.show.quote', {quoteId: newQuoteId});
         }
       }
     }
