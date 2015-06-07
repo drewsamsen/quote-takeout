@@ -13,3 +13,14 @@ section
     i.fa.fa-quote-left.grey-text.text-lighten-2 &nbsp;
     | {{ Quote.quote.body }}&nbsp;
     i.fa.fa-quote-right.grey-text.text-lighten-2
+
+.divider
+
+section
+  p
+    a.right.grey-text(href="" ng-click="Quote.next()")
+      | Next&nbsp;
+      i.fa.fa-angle-right
+    a.left.grey-text(href="" ng-click="Quote.previous()")
+      i.fa.fa-angle-left
+      | &nbsp;Previous

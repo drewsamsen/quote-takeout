@@ -31,6 +31,7 @@ angular.module('quoteTakeout')
       for (var i = 0; i < quoteService.quotes.length; i++) {
         if (quoteService.quotes[i].id == quoteId) {
           quoteService.quote = quoteService.quotes[i];
+          quoteService.quote.index = i;
           break;
         }
       }
@@ -71,6 +72,44 @@ angular.module('quoteTakeout')
         bId = parseInt(bookId),
         qId = parseInt(quoteId);
       quotesInMemory(bId) ? fetchQuotes(bId, qId) : getQuotes(bId, qId);
+    },
+
+    next: function() {
+      if (quoteService.quotes &&
+        angular.isArray(quoteService.quotes) &&
+        quoteService.quotes.length > 0 &&
+        quoteService.quote &&
+        angular.isDefined(quoteService.quote.index)) {
+
+        var newIndex = parseInt(quoteService.quote.index) + 1;
+
+        if (newIndex >= quoteService.quotes.length) {
+          Notifier.show('This is the last quote in the book.');
+        } else {
+          console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
+          quoteService.quote = quoteService.quotes[newIndex];
+          quoteService.quote.index = newIndex;
+        }
+      }
+    },
+
+    previous: function() {
+      if (quoteService.quotes &&
+        angular.isArray(quoteService.quotes) &&
+        quoteService.quotes.length > 0 &&
+        quoteService.quote &&
+        angular.isDefined(quoteService.quote.index)) {
+
+        var newIndex = parseInt(quoteService.quote.index) - 1;
+
+        if (newIndex < 0) {
+          Notifier.show('This is the first quote in the book.');
+        } else {
+          console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
+          quoteService.quote = quoteService.quotes[newIndex];
+          quoteService.quote.index = newIndex;
+        }
+      }
     }
 
   };
