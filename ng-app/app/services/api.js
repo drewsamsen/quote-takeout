@@ -110,6 +110,30 @@ angular.module('quoteTakeout')
         });
       }
 
+    },
+
+    quotes: {
+
+      getTags: function(id) {
+        console.warn('API CALL: quotes.getTags');
+        return _query({
+          method: 'GET',
+          url: 'quotes/'+id+'/tags.json'
+        });
+      },
+
+      // comma separated
+      setTags: function(id, tagList) {
+        console.warn('API CALL: quotes.setTags');
+        return _query({
+          method: 'POST',
+          url: 'quotes/'+id+'/tags.json',
+          data: {
+            tags: tagList
+          }
+        });
+      }
+
     }
 
   };

@@ -6,7 +6,11 @@ angular.module('quoteTakeout')
   Notifier, hotkeys) {
 
   Book.getBook($stateParams.bookId);
-  Quote.getQuote($stateParams.bookId, $stateParams.quoteId);
+
+  Quote.getQuote($stateParams.bookId, $stateParams.quoteId)
+  .then(function() {
+    Quote.getTags($stateParams.quoteId)
+  });
 
   hotkeys.bindTo($scope)
   .add({
@@ -36,5 +40,16 @@ angular.module('quoteTakeout')
       }
     })
   };
+
+  $scope.setTags = function(tagList) {
+    API.quotes.setTags(Quote.quote.id, tagList)
+    .then(function(resp) {
+      if (resp.status === 200) {
+        Notifier.show('Success: tags updated');
+      } else {
+        console.error('something went wrong');
+      }
+    })
+  }
 
 });

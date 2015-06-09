@@ -1,8 +1,9 @@
 class QuoteController < ApplicationController
 
-  before_filter :get_book
+  before_filter :get_book, except: [:tags]
   before_filter :ensure_book_found, only: [:index, :create, :destroy]
   before_filter :check_admin, only: [:create, :destroy]
+  before_filter :get_quote, only: [:tags]
 
   def index
     @quotes = @book.quotes
@@ -90,10 +91,30 @@ class QuoteController < ApplicationController
     respond_with(quote: @quote)
   end
 
+  def tags
+    if request.method == "POST"
+      @quote.tag_list = params[:tags]
+      @quote.save
+      respond_to do |format|
+        format.json {
+          render :json => {
+            :tags => @quote
+          }
+        }
+      end
+    else
+      respond_with(tags: @quote.tag_list)
+    end
+  end
+
   private
 
   def get_book
     @book = Book.find(params[:id] || params[:book_id])
+  end
+
+  def get_quote
+    @quote = Quote.find(params[:id])
   end
 
   def ensure_book_found

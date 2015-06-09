@@ -2,7 +2,7 @@
 
 angular.module('quoteTakeout')
 
-.service('Quote', function(API, Notifier, $state) {
+.service('Quote', function(API, Notifier, $state, $q) {
 
   //
   // Begin private functions
@@ -23,6 +23,8 @@ angular.module('quoteTakeout')
   // quoteService.quote. This is for the quote#show view.
   //
   var fetchQuotesFromMem = function(bookId, quoteId) {
+    var deferred = $q.defer();
+
     quoteService.quotes = quoteService.books[bookId].quotes;
     quoteService.quotesCount = quoteService.books[bookId].quotesCount;
 
@@ -34,20 +36,20 @@ angular.module('quoteTakeout')
           break;
         }
       }
+      deferred.resolve(quoteService.quotes[i]);
     }
-
+    return deferred.promise;
   };
 
   // Call up the API for all the quotes from a given book. Then ask fetchQuotesFromMem()
   // to put things in the correct place.
-  var getQuotesFromApi = function(bookId, quoteId) {
-    API.books.getQuotes(bookId)
+  var getQuotesFromApi = function(bookId) {
+    return API.books.getQuotes(bookId)
     .then(function(resp) {
       quoteService.books[bookId] = {
         quotes: resp.data.quotes,
         quotesCount: resp.data.count
       };
-      fetchQuotesFromMem(bookId, quoteId);
     });
   };
 
@@ -75,7 +77,35 @@ angular.module('quoteTakeout')
       var
         bId = parseInt(bookId),
         qId = parseInt(quoteId);
-      quotesInMemory(bId) ? fetchQuotesFromMem(bId, qId) : getQuotesFromApi(bId, qId);
+      if (quotesInMemory(bId)) {
+        return fetchQuotesFromMem(bId, qId)
+      } else {
+        return getQuotesFromApi(bId, qId)
+        .then(function() {
+          fetchQuotesFromMem(bookId, quoteId);
+        });
+      }
+    },
+
+    getTags: function(quoteId) {
+      // Do nothing if we already have the tags for this quote
+      if (quoteService.quote.tags) {
+        console.info('already have tasg for quote', quoteId);
+        return false;
+      }
+
+      return API.quotes.getTags(quoteId)
+      .then(function(resp) {
+        quoteService.quote.tags = resp.data.tags;
+        if (quoteService.quotes && quoteService.quotes.length > 0) {
+          for (var i = 0; i < quoteService.quotes.length; i++) {
+            if (quoteService.quotes[i].id == quoteId) {
+              quoteService.quotes[i].tags = resp.data.tags;
+              break;
+            }
+          }
+        }
+      });
     },
 
     next: function(bookId) {

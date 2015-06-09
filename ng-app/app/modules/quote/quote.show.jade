@@ -19,8 +19,8 @@ section
 section
   .row
     form.col.s12(ng-if="user.admin"
-      name="updateQuoteForm"
-      ng-submit="updateQuote(Quote.quote)"
+      name="updatQuoteTagsForm"
+      ng-submit="setTags(Quote.quote.tags)"
       novalidate)
 
       .row
