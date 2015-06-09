@@ -40,8 +40,7 @@ angular.module('quoteTakeout')
   };
 
   // Plucks the specified book from the books collection in memory
-  var fetchBook = function(bookId) {
-    console.log('fetchBook from collection in memory');
+  var fetchBookFromMem = function(bookId) {
     for (var i = 0; i < bookService.books.length; i++) {
       if (bookService.books[i].id === parseInt(bookId)) {
         bookService.book = bookService.books[i];
@@ -53,18 +52,22 @@ angular.module('quoteTakeout')
   };
 
   // Do a real GET from the API
-  var getBook = function(bookId) {
-    console.log('getBook from API');
+  var getBookFromApi = function(bookId) {
     API.books.get(bookId)
     .then(function(resp) {
-      bookService.book = resp.data.book;
+      updateInMemory(resp.data.book);
+      // Above does not handle labels. Hmm
       bookService.book.labels = resp.data.labels;
     });
   };
 
   // Update the current book (if active) and the book in the collection
   var updateInMemory = function(bookData) {
-    if (bookService.book.id == bookData.id) {
+    if (bookService.book && bookService.book.id) {
+      if (bookService.book.id == bookData.id) {
+        bookService.book = bookData;
+      }
+    } else {
       bookService.book = bookData;
     }
     if (bookService.books && bookService.books.length > 0) {
@@ -74,6 +77,8 @@ angular.module('quoteTakeout')
           break;
         }
       }
+    } else {
+      bookService.books = [bookData];
     }
   };
 
@@ -91,30 +96,15 @@ angular.module('quoteTakeout')
       labels: []
     },
 
-    // If an ID is passed, get and set up individual book. Otherwise get all.
-    // Optional quoteId can be passed in if we need to pull out a specific
-    // quote, like on quote#show
-    bootstrap: function(bookId, quoteId) {
-
-      // Get book
-      if (bookId) {
-        bookInMemory(bookId) ? fetchBook(bookId) : getBook(bookId);
-
-        // Get quotes for book, optionally a specific quote if quoteId present
-        Quote.bootstrapBook(bookId, quoteId);
-
-      } else {
-        bookService.getBooks();
-        bookService.getLabels();
-      }
-
-    },
-
     getBooks: function() {
       API.books.all()
       .then(function(resp) {
         bookService.books = resp.data.books;
       });
+    },
+
+    getBook: function(bookId) {
+      bookInMemory(bookId) ? fetchBookFromMem(bookId) : getBookFromApi(bookId);
     },
 
     update: function(bookId, bookData) {

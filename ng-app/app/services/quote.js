@@ -22,8 +22,7 @@ angular.module('quoteTakeout')
   // Also then optionally get a specific quote, by id, and put that on
   // quoteService.quote. This is for the quote#show view.
   //
-  var fetchQuotes = function(bookId, quoteId) {
-    console.log('fetchQuotes from collection in memory');
+  var fetchQuotesFromMem = function(bookId, quoteId) {
     quoteService.quotes = quoteService.books[bookId].quotes;
     quoteService.quotesCount = quoteService.books[bookId].quotesCount;
 
@@ -39,17 +38,16 @@ angular.module('quoteTakeout')
 
   };
 
-  // Call up the API for all the quotes from a given book. Then ask fetchQuotes()
+  // Call up the API for all the quotes from a given book. Then ask fetchQuotesFromMem()
   // to put things in the correct place.
-  var getQuotes = function(bookId, quoteId) {
-    console.log('getQuotes from API');
+  var getQuotesFromApi = function(bookId, quoteId) {
     API.books.getQuotes(bookId)
     .then(function(resp) {
       quoteService.books[bookId] = {
         quotes: resp.data.quotes,
         quotesCount: resp.data.count
       };
-      fetchQuotes(bookId, quoteId);
+      fetchQuotesFromMem(bookId, quoteId);
     });
   };
 
@@ -66,15 +64,21 @@ angular.module('quoteTakeout')
     quotesCount: 0,
     quote: {},
 
-    // Get quotes ready for a given bookId (quoteId is optional)
-    bootstrapBook: function(bookId, quoteId) {
+    getQuotes: function(bookId) {
+      var bId = parseInt(bookId);
+      if (!quotesInMemory(bId)) {
+        getQuotesFromApi(bId);
+      }
+    },
+
+    getQuote: function(bookId, quoteId) {
       var
         bId = parseInt(bookId),
         qId = parseInt(quoteId);
-      quotesInMemory(bId) ? fetchQuotes(bId, qId) : getQuotes(bId, qId);
+      quotesInMemory(bId) ? fetchQuotesFromMem(bId, qId) : getQuotesFromApi(bId, qId);
     },
 
-    next: function() {
+    next: function(bookId) {
       var newIndex, newQuoteId;
 
       if (quoteService.quotes &&
@@ -90,12 +94,12 @@ angular.module('quoteTakeout')
         } else {
           console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
           newQuoteId = quoteService.quotes[newIndex].id;
-          $state.go('layout_app.books.show.quote', {quoteId: newQuoteId});
+          $state.go('layout_app.quotes.show', {bookId: bookId, quoteId: newQuoteId});
         }
       }
     },
 
-    previous: function() {
+    previous: function(bookId) {
       var newIndex, newQuoteId;
 
       if (quoteService.quotes &&
@@ -111,7 +115,7 @@ angular.module('quoteTakeout')
         } else {
           console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
           newQuoteId = quoteService.quotes[newIndex].id;
-          $state.go('layout_app.books.show.quote', {quoteId: newQuoteId});
+          $state.go('layout_app.quotes.show', {bookId: bookId, quoteId: newQuoteId});
         }
       }
     }

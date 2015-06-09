@@ -2,11 +2,13 @@
 
 angular.module('quoteTakeout')
 
-.controller('BookCtrl', function($scope, API, Notifier, Book) {
+.controller('BookIndexCtrl', function($scope, API, Notifier, Book) {
 
   $scope.newBook = {};
 
-  Book.bootstrap();
+  // TODO: These both seem to hit the API at each load of book index....
+  Book.getBooks();
+  Book.getLabels();
 
   $scope.createBook = function(data) {
     API.books.create(data)
@@ -17,13 +19,13 @@ angular.module('quoteTakeout')
         Book.books.push(resp.data.book);
       }
     });
-  }
+  };
 
   $scope.resetForm = function(form) {
     if (form) {
       form.$setPristine();
       form.$setUntouched();
     }
-  }
+  };
 
 });

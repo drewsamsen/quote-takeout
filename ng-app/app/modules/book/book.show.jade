@@ -1,7 +1,7 @@
 div(ui-view="")
 
   h4
-    a(href="" ui-sref="layout_app.books")
+    a(href="" ui-sref="layout_app.books.index")
       | Books
     | - {{ Book.book.name }}
 
@@ -113,8 +113,8 @@ div(ui-view="")
             | {{ quote.body }}&nbsp;
             i.fa.fa-quote-right.grey-text.text-lighten-2
         td
-          a.grey-text.text-lighten-1(href="javascript:void(0)" ng-click="showQuote(quote)")
+          a.grey-text.text-lighten-1(href="javascript:void(0)" ng-click="quoteModal(quote)")
             i.fa.fa-external-link
-          a(href="" ui-sref="layout_app.books.show.quote({quoteId: quote.id})") | Permalink
+          a(href="" ui-sref="layout_app.quotes.show({bookId: Book.book.id, quoteId: quote.id})") | Permalink
 
   include _quote_show_modal

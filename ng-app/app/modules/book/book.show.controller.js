@@ -5,25 +5,8 @@ angular.module('quoteTakeout')
 .controller('BookShowCtrl', function($scope, Book, API, Quote, $stateParams,
   Notifier, hotkeys) {
 
-  $scope.newJsonPost = {};
-  $scope.selectedQuote = {};
-  $scope.bookQuotes = [];
-  $scope.quotesCount = 0;
-
-  // quoteId is optionally present when showing an individual quote
-  Book.bootstrap($stateParams.bookId, $stateParams.quoteId);
-
-  hotkeys.bindTo($scope)
-  .add({
-    combo: 'right',
-    description: 'Next quote in book',
-    callback: function() { Quote.next() }
-  })
-  .add({
-    combo: 'left',
-    description: 'Previous quote in book',
-    callback: function() { Quote.previous() }
-  });
+  Book.getBook($stateParams.bookId);
+  Quote.getQuotes($stateParams.bookId);
 
   // TODO: just call bookService directly from view?
   $scope.updateBook = function(book) {
@@ -35,11 +18,11 @@ angular.module('quoteTakeout')
     .then(function(resp) {
       if (resp.status === 200) {
         Notifier.show('Success: quote deleted');
-        $scope.quotesCount -= 1;
+        Quote.quotesCount -= 1;
         $('#show-quote-modal').closeModal();
-        for (var i = 0; i < $scope.bookQuotes.length; i++) {
-          if ($scope.bookQuotes[i].id === quoteId) {
-            $scope.bookQuotes[i].is_deleted = true;
+        for (var i = 0; i < Quote.quotes.length; i++) {
+          if (Quote.quotes[i].id === quoteId) {
+            Quote.quotes[i].is_deleted = true;
             break;
           }
         }
@@ -60,12 +43,12 @@ angular.module('quoteTakeout')
         );
         $scope.newJsonPost = {};
         // TODO: re-order, by location
-        $scope.bookQuotes = $scope.bookQuotes.concat(resp.data.quotes);
+        Quote.quotes = Quote.quotes.concat(resp.data.quotes);
       }
     })
   };
 
-  $scope.showQuote = function(quote) {
+  $scope.quoteModal = function(quote) {
     Quote.quote = quote;
     $('#show-quote-modal').openModal();
   };

@@ -76,9 +76,17 @@ angular.module('quoteTakeout')
   })
 
   .state('layout_app.books', {
+    abstract: true,
     url: '/books',
-    templateUrl: 'modules/book/book.html',
-    controller: 'BookCtrl'
+    // Note that abstract view still needs a ui-view for its children to populate
+    // so we add it inline here
+    template: '<ui-view/>'
+  })
+
+  .state('layout_app.books.index', {
+    url: '/index',
+    templateUrl: 'modules/book/book.index.html',
+    controller: 'BookIndexCtrl'
   })
 
   .state('layout_app.books.show', {
@@ -87,10 +95,18 @@ angular.module('quoteTakeout')
     controller: 'BookShowCtrl'
   })
 
-  .state('layout_app.books.show.quote', {
-    url: '/quote/{quoteId:[0-9]+}',
-    templateUrl: 'modules/book/book.show.quote.html',
-    controller: 'BookShowCtrl'
+  .state('layout_app.quotes', {
+    abstract: true,
+    url: '/books/{bookId:[0-9]+}/quotes',
+    // Note that abstract view still needs a ui-view for its children to populate
+    // so we add it inline here
+    template: '<ui-view/>'
+  })
+
+  .state('layout_app.quotes.show', {
+    url: '/{quoteId:[0-9]+}',
+    templateUrl: 'modules/quote/quote.show.html',
+    controller: 'QuoteShowCtrl'
   });
 
 });

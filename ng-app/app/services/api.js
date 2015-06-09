@@ -32,6 +32,7 @@ angular.module('quoteTakeout')
     users: {
 
       all: function() {
+        console.warn('API CALL: users.all');
         return _query({
           method: 'GET',
           url: 'users.json'
@@ -43,6 +44,7 @@ angular.module('quoteTakeout')
     books: {
 
       all: function() {
+        console.warn('API CALL: books.all');
         return _query({
           method: 'GET',
           url: 'books.json'
@@ -50,6 +52,7 @@ angular.module('quoteTakeout')
       },
 
       create: function(data) {
+        console.warn('API CALL: books.create');
         return _query({
           method: 'POST',
           url: 'books.json',
@@ -58,6 +61,7 @@ angular.module('quoteTakeout')
       },
 
       get: function(id) {
+        console.warn('API CALL: books.get');
         return _query({
           method: 'GET',
           url: 'books/'+id+'.json'
@@ -65,6 +69,7 @@ angular.module('quoteTakeout')
       },
 
       update: function(id, data) {
+        console.warn('API CALL: books.update');
         return _query({
           method: 'PUT',
           url: 'books/'+id+'.json',
@@ -73,6 +78,7 @@ angular.module('quoteTakeout')
       },
 
       getQuotes: function(id) {
+        console.warn('API CALL: book.getQuotes');
         return _query({
           method: 'GET',
           url: 'books/'+id+'/quotes.json'
@@ -80,6 +86,7 @@ angular.module('quoteTakeout')
       },
 
       addQuote: function(bookId, quote) {
+        console.warn('API CALL: book.addQuote');
         return _query({
           method: 'POST',
           url: 'books/'+bookId+'/quotes.json',
@@ -88,6 +95,7 @@ angular.module('quoteTakeout')
       },
 
       deleteQuote: function(bookId, quoteId) {
+        console.warn('API CALL: book.deleteQuote');
         return _query({
           method: 'DELETE',
           url: 'books/'+bookId+'/quotes/'+quoteId+'.json'
@@ -95,6 +103,7 @@ angular.module('quoteTakeout')
       },
 
       getAllLabels: function() {
+        console.warn('API CALL: book.getAllLabels');
         return _query({
           method: 'GET',
           url: 'books/labels.json'
