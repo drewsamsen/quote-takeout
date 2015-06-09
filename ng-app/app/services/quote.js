@@ -36,8 +36,8 @@ angular.module('quoteTakeout')
           break;
         }
       }
-      deferred.resolve(quoteService.quotes[i]);
     }
+    deferred.resolve(quoteService.quotes);
     return deferred.promise;
   };
 
@@ -69,7 +69,10 @@ angular.module('quoteTakeout')
     getQuotes: function(bookId) {
       var bId = parseInt(bookId);
       if (!quotesInMemory(bId)) {
-        getQuotesFromApi(bId);
+        return getQuotesFromApi(bId)
+        .then(function() {
+          fetchQuotesFromMem(bId);
+        })
       }
     },
 
@@ -80,7 +83,7 @@ angular.module('quoteTakeout')
       if (quotesInMemory(bId)) {
         return fetchQuotesFromMem(bId, qId)
       } else {
-        return getQuotesFromApi(bId, qId)
+        return getQuotesFromApi(bId)
         .then(function() {
           fetchQuotesFromMem(bookId, quoteId);
         });
