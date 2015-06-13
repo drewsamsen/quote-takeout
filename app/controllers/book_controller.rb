@@ -5,7 +5,13 @@ class BookController < ApplicationController
 
   def index
     # Adds a 'quote_count' attribute
-    @books = Book.joins(:quotes).select('books.*, COUNT(quotes.id) as quote_count').group('books.id')
+    # @books = Book.joins(:quotes).select('books.*, COUNT(quotes.id) as quote_count').group('books.id')
+
+    if params[:label]
+      @books = Book.tagged_with(params[:label])
+    else
+      @books = Book.all
+    end
 
     #
     # Decorate each book with array of its labels:
@@ -66,7 +72,8 @@ class BookController < ApplicationController
   end
 
   def labels
-    @labels = ActsAsTaggableOn::Tag.all.map { |t| t.name }
+    @labels = ActsAsTaggableOn::Tagging.includes(:tag).where(context: 'labels').map {|t| t.tag.name}
+    @labels.uniq!
     respond_with(labels: @labels)
   end
 

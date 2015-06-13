@@ -1,16 +1,23 @@
 class QuoteController < ApplicationController
 
-  before_filter :get_book, except: [:tags]
-  before_filter :ensure_book_found, only: [:index, :create, :destroy]
+  before_filter :get_book, except: [:tags, :index]
   before_filter :check_admin, only: [:create, :destroy]
   before_filter :get_quote, only: [:tags]
 
+  # can accept search options. by book or by tag: params[:book_id], params[:tag]
   def index
-    @quotes = @book.quotes
-    respond_with(quotes: @quotes, count: @quotes.count)
+    if params[:book_id]
+      @quotes = Book.find(params[:book_id]).quotes
+    elsif params[:tag]
+      @quotes = Quote.tagged_with(params[:tag]).order(:created_at)
+    else
+      @quotes = Quote.order(:created_at).limit(50)
+    end
+    respond_with(quotes: @quotes)
   end
 
   def create
+    binding.pry
     if is_valid_json?(params[:body])
 
       @quotes = []
@@ -92,7 +99,7 @@ class QuoteController < ApplicationController
   end
 
   def tags
-    if request.method == "POST"
+    if request.method == "POST" && current_user && current_user.admin?
       @quote.tag_list = params[:tags]
       @quote.save
       respond_to do |format|
@@ -115,10 +122,6 @@ class QuoteController < ApplicationController
 
   def get_quote
     @quote = Quote.find(params[:id])
-  end
-
-  def ensure_book_found
-    raise ArgumentError.new('Cannot find book') unless @book
   end
 
   def is_valid_json?(str)

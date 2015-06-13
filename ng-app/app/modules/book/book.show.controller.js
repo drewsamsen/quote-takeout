@@ -3,10 +3,9 @@
 angular.module('quoteTakeout')
 
 .controller('BookShowCtrl', function($scope, Book, API, Quote, $stateParams,
-  Notifier, hotkeys) {
+  Notifier) {
 
   Book.getBook($stateParams.bookId);
-  Quote.getQuotes($stateParams.bookId);
 
   // TODO: just call bookService directly from view?
   $scope.updateBook = function(book) {

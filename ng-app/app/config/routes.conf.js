@@ -69,44 +69,54 @@ angular.module('quoteTakeout')
     controller: 'DashboardCtrl'
   })
 
+  /*
+   * User routes
+  */
+
   .state('layout_app.users', {
     url: '/users',
     templateUrl: 'modules/user/user.html',
     controller: 'UserCtrl'
   })
 
-  .state('layout_app.books', {
-    abstract: true,
-    url: '/books',
-    // Note that abstract view still needs a ui-view for its children to populate
-    // so we add it inline here
-    template: '<ui-view/>'
-  })
+  /*
+   * Book routes
+  */
 
-  .state('layout_app.books.index', {
-    url: '/index',
+  .state('layout_app.books', {
+    url: '/books?label',
     templateUrl: 'modules/book/book.index.html',
     controller: 'BookIndexCtrl'
   })
 
-  .state('layout_app.books.show', {
-    url: '/{bookId:[0-9]+}',
-    templateUrl: 'modules/book/book.show.html',
-    controller: 'BookShowCtrl'
-  })
+    .state('layout_app.books.show', {
+      url: '/{bookId:[0-9]+}',
+      templateUrl: 'modules/book/book.show.html',
+      controller: 'BookShowCtrl'
+    })
+
+      .state('layout_app.books.show.quotes', {
+        url: '/quotes',
+        templateUrl: 'modules/book/book.quotes.html',
+        controller: 'BookShowQuotesCtrl'
+      })
+
+        .state('layout_app.books.show.quotes.show', {
+          url: '/{quoteId:[0-9]+}',
+          templateUrl: 'modules/quote/quote.show.html',
+          controller: 'QuoteShowCtrl'
+        })
+
+  /*
+   * Quote routes
+  */
 
   .state('layout_app.quotes', {
-    abstract: true,
-    url: '/books/{bookId:[0-9]+}/quotes',
-    // Note that abstract view still needs a ui-view for its children to populate
-    // so we add it inline here
-    template: '<ui-view/>'
+    url: '/quotes?tag',
+    templateUrl: 'modules/quote/quote.index.html',
+    controller: 'QuoteIndexCtrl'
   })
 
-  .state('layout_app.quotes.show', {
-    url: '/{quoteId:[0-9]+}',
-    templateUrl: 'modules/quote/quote.show.html',
-    controller: 'QuoteShowCtrl'
-  });
+  ;
 
 });

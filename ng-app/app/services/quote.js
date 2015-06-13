@@ -44,13 +44,57 @@ angular.module('quoteTakeout')
   // Call up the API for all the quotes from a given book. Then ask fetchQuotesFromMem()
   // to put things in the correct place.
   var getQuotesFromApi = function(bookId) {
-    return API.books.getQuotes(bookId)
+    return API.quotes.all({book_id: bookId})
     .then(function(resp) {
       quoteService.books[bookId] = {
         quotes: resp.data.quotes,
         quotesCount: resp.data.count
       };
     });
+  };
+
+  // Get the next quote in the current quotes collection in memory
+  var getNextQuote = function() {
+    var newIndex, newQuote;
+    if (quoteService.quotes &&
+      angular.isArray(quoteService.quotes) &&
+      quoteService.quotes.length > 0 &&
+      quoteService.quote &&
+      angular.isDefined(quoteService.quote.index)) {
+
+      newIndex = parseInt(quoteService.quote.index) + 1;
+
+      if (newIndex >= quoteService.quotes.length) {
+        Notifier.show('This is the last quote in the current collection.');
+        return false;
+      } else {
+        console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
+        newQuote = quoteService.quotes[newIndex];
+        return newQuote;
+      }
+    }
+  };
+
+  // Get the previous quote in the current quotes collection in memory
+  var getPreviousQuote = function() {
+    var newIndex, newQuote;
+    if (quoteService.quotes &&
+      angular.isArray(quoteService.quotes) &&
+      quoteService.quotes.length > 0 &&
+      quoteService.quote &&
+      angular.isDefined(quoteService.quote.index)) {
+
+      newIndex = parseInt(quoteService.quote.index) - 1;
+
+      if (newIndex < 0) {
+        Notifier.show('This is the first quote in the current collection.');
+        return false;
+      } else {
+        console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
+        newQuote = quoteService.quotes[newIndex];
+        return newQuote;
+      }
+    }
   };
 
   //
@@ -65,15 +109,14 @@ angular.module('quoteTakeout')
     quotes: [],
     quotesCount: 0,
     quote: {},
+    allTags: [],
 
-    getQuotes: function(bookId) {
-      var bId = parseInt(bookId);
-      if (!quotesInMemory(bId)) {
-        return getQuotesFromApi(bId)
-        .then(function() {
-          fetchQuotesFromMem(bId);
-        })
-      }
+    getQuotes: function(query) {
+      API.quotes.all(query)
+      .then(function(resp) {
+        quoteService.quotes = resp.data.quotes;
+        quoteService.quotesCount = resp.data.quotes.length;
+      });
     },
 
     getQuote: function(bookId, quoteId) {
@@ -93,7 +136,7 @@ angular.module('quoteTakeout')
     getTags: function(quoteId) {
       // Do nothing if we already have the tags for this quote
       if (quoteService.quote.tags) {
-        console.info('already have tasg for quote', quoteId);
+        console.info('already have tags for quote', quoteId);
         return false;
       }
 
@@ -111,46 +154,65 @@ angular.module('quoteTakeout')
       });
     },
 
-    next: function(bookId) {
-      var newIndex, newQuoteId;
-
-      if (quoteService.quotes &&
-        angular.isArray(quoteService.quotes) &&
-        quoteService.quotes.length > 0 &&
-        quoteService.quote &&
-        angular.isDefined(quoteService.quote.index)) {
-
-        newIndex = parseInt(quoteService.quote.index) + 1;
-
-        if (newIndex >= quoteService.quotes.length) {
-          Notifier.show('This is the last quote in the book.');
+    setTags: function(tagList) {
+      return API.quotes.setTags(quoteService.quote.id, tagList)
+      .then(function(resp) {
+        if (resp.status === 200) {
+          Notifier.show('Success: tags updated');
         } else {
-          console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
-          newQuoteId = quoteService.quotes[newIndex].id;
-          $state.go('layout_app.quotes.show', {bookId: bookId, quoteId: newQuoteId});
+          console.error('something went wrong');
         }
+      });
+    },
+
+    getAllTags: function() {
+      if (quoteService.tags && quoteService.tags.length > 0) {
+        console.log('already have all tags');
+        return false;
+      }
+
+      return API.quotes.getAllTags()
+      .then(function(resp) {
+        if (resp.status === 200) {
+          quoteService.allTags = resp.data.tags;
+        }
+      });
+
+    },
+
+    next: function() {
+      var nextQuote = getNextQuote();
+      if (nextQuote) {
+        $state.go('layout_app.books.show.quotes.show', {bookId: nextQuote.book_id, quoteId: nextQuote.id});
       }
     },
 
-    previous: function(bookId) {
-      var newIndex, newQuoteId;
-
-      if (quoteService.quotes &&
-        angular.isArray(quoteService.quotes) &&
-        quoteService.quotes.length > 0 &&
-        quoteService.quote &&
-        angular.isDefined(quoteService.quote.index)) {
-
-        newIndex = parseInt(quoteService.quote.index) - 1;
-
-        if (newIndex < 0) {
-          Notifier.show('This is the first quote in the book.');
-        } else {
-          console.info('getting quote '+(newIndex+1)+'/'+quoteService.quotes.length);
-          newQuoteId = quoteService.quotes[newIndex].id;
-          $state.go('layout_app.quotes.show', {bookId: bookId, quoteId: newQuoteId});
-        }
+    previous: function() {
+      var previousQuote = getPreviousQuote();
+      if (previousQuote) {
+        $state.go('layout_app.books.show.quotes.show', {bookId: previousQuote.book_id, quoteId: previousQuote.id});
       }
+    },
+
+    deleteQuote: function(bookId, quoteId) {
+      return API.books.deleteQuote(bookId, quoteId)
+      .then(function(resp) {
+        if (resp.status === 204) {
+          Notifier.show('Success: quote deleted');
+
+          if (quoteService.quotesCount) {
+            quoteService.quotesCount -= 1;
+          }
+
+          for (var i = 0; i < quoteService.quotes.length; i++) {
+            if (quoteService.quotes[i].id === quoteId) {
+              quoteService.quotes[i].is_deleted = true;
+              break;
+            }
+          }
+
+        }
+      });
     }
 
   };

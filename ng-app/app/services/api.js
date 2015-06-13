@@ -27,6 +27,25 @@ angular.module('quoteTakeout')
     }
   };
 
+  var parameterize = function(obj) {
+    var
+      paramString = '',
+      pairs = [];
+
+    if (angular.isObject(obj)) {
+      angular.forEach(obj, function(value, key) {
+        if (value) {
+          pairs.push(key + '=' + value);
+        }
+      });
+      paramString = pairs.join('&');
+    }
+    if (paramString.length > 0) {
+      paramString = '?' + paramString;
+    }
+    return paramString;
+  };
+
   var api = {
 
     users: {
@@ -43,11 +62,11 @@ angular.module('quoteTakeout')
 
     books: {
 
-      all: function() {
+      all: function(query) {
         console.warn('API CALL: books.all');
         return _query({
           method: 'GET',
-          url: 'books.json'
+          url: 'books.json' + parameterize(query)
         });
       },
 
@@ -74,14 +93,6 @@ angular.module('quoteTakeout')
           method: 'PUT',
           url: 'books/'+id+'.json',
           data: data
-        });
-      },
-
-      getQuotes: function(id) {
-        console.warn('API CALL: book.getQuotes');
-        return _query({
-          method: 'GET',
-          url: 'books/'+id+'/quotes.json'
         });
       },
 
@@ -113,6 +124,22 @@ angular.module('quoteTakeout')
     },
 
     quotes: {
+
+      all: function(query) {
+        console.warn('API CALL: quotes.all');
+        return _query({
+          method: 'GET',
+          url: 'quotes.json' + parameterize(query)
+        });
+      },
+
+      getAllTags: function() {
+        console.warn('API CALL: quotes.getAllTags');
+        return _query({
+          method: 'GET',
+          url: 'tags.json'
+        });
+      },
 
       getTags: function(id) {
         console.warn('API CALL: quotes.getTags');

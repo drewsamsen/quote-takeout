@@ -2,12 +2,17 @@
 
 angular.module('quoteTakeout')
 
-.controller('BookIndexCtrl', function($scope, API, Notifier, Book) {
+.controller('BookIndexCtrl', function($scope, API, Notifier, Book, $stateParams) {
 
   $scope.newBook = {};
 
-  // TODO: These both seem to hit the API at each load of book index....
-  Book.getBooks();
+  $scope.activeLabel = $stateParams.label;
+
+  Book.books = [];
+
+  // If present, will pass along query obj. Will be ignored if no query string
+  // present for label
+  Book.getBooks({label: $stateParams.label});
   Book.getLabels();
 
   $scope.createBook = function(data) {

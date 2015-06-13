@@ -96,8 +96,8 @@ angular.module('quoteTakeout')
       labels: []
     },
 
-    getBooks: function() {
-      API.books.all()
+    getBooks: function(query) {
+      API.books.all(query)
       .then(function(resp) {
         bookService.books = resp.data.books;
       });

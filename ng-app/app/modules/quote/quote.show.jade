@@ -1,6 +1,6 @@
 section
   h4
-    a(href="" ui-sref="layout_app.books.index")
+    a(href="" ui-sref="layout_app.books")
       | Books
     span.grey-text.text-lighten-2 &nbsp;>&nbsp;
     a(href="" ui-sref="layout_app.books.show({bookId: Book.book.id})")
@@ -14,13 +14,11 @@ section
     | {{ Quote.quote.body }}&nbsp;
     i.fa.fa-quote-right.grey-text.text-lighten-2
 
-.divider
-
 section
   .row
     form.col.s12(ng-if="user.admin"
       name="updatQuoteTagsForm"
-      ng-submit="setTags(Quote.quote.tags)"
+      ng-submit="Quote.setTags(Quote.quote.tags)"
       novalidate)
 
       .row
