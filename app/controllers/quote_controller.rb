@@ -17,7 +17,6 @@ class QuoteController < ApplicationController
   end
 
   def create
-    binding.pry
     if is_valid_json?(params[:body])
 
       @quotes = []

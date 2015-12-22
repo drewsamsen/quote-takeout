@@ -39,7 +39,7 @@ angular.module('quoteTakeout')
 
   $rootScope.$on('auth:password-reset-confirm-success', function(ev, data) {
     console.log('auth:password-reset-confirm-success');
-    $('change-pw-modal').openModal();
+    $('#change-pw-modal').openModal();
   });
 
   $rootScope.$on('auth:password-change-success', function(ev, data) {
