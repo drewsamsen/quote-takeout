@@ -16,15 +16,10 @@ class ApiController < ApplicationController
     else
       raise "Invalid password"
     end
-    respond_to do |format|
-      format.json {
-        render :json => {
-          :user => @user
-        }
-      }
+    render :json => {:user => @user}
     end
   rescue => e
-    respond_with(error: e.message)
+    render :json => {:error => e.message}
   end
 
 end
