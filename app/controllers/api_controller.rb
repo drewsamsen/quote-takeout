@@ -4,6 +4,7 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def login
+    puts request
     puts params
     email = params[:email]
     password = params[:password]
