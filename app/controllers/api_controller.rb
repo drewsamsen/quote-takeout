@@ -17,7 +17,6 @@ class ApiController < ApplicationController
       raise "Invalid password"
     end
     render :json => {:user => @user}
-    end
   rescue => e
     render :json => {:error => e.message}
   end
