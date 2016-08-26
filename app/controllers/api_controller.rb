@@ -4,7 +4,7 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def login
-    puts request
+    puts request.body
     puts params
     email = params[:email]
     password = params[:password]
@@ -21,6 +21,10 @@ class ApiController < ApplicationController
     render :json => {:user => @user}
   rescue => e
     render :json => {:error => e.message}
+  end
+
+  def api_params
+    params.permit(:email, :password)
   end
 
 end
