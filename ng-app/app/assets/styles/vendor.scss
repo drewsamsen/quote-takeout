@@ -1,4 +1,5 @@
 @import 'variables';
+$tablet: "(max-width: 1023px)";
 
 /* makes the footer sticky at the bottom of page */
 body {
@@ -19,9 +20,9 @@ main {
 }
 
 .container {
-  width: 65% !important;
   max-width: 880px !important;
 }
+
 
 // header, main, footer {
 //   padding-left: 240px;
