@@ -62,7 +62,7 @@ class ApiController < ApplicationController
   end
 
   def api_params
-    params.permit(:email, :password)
+    params.permit(:email, :password, :tag)
   end
 
 end
