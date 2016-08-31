@@ -27,6 +27,13 @@ class ApiController < ApplicationController
     render :json => {:error => e.message}
   end
 
+  def book_quotes
+    quotes = Book.find(params[:id]).quotes
+    render :json => {:quotes => quotes}
+  rescue => e
+    render :json => {:error => e.message}
+  end
+
   def api_params
     params.permit(:email, :password)
   end

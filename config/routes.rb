@@ -24,5 +24,6 @@ Rails.application.routes.draw do
 
   post 'api/login' => 'api#login'
   get 'api/books' => 'api#books'
+  get 'api/books/:id/quotes' => 'api#book_quotes'
 
 end
