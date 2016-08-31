@@ -34,6 +34,14 @@ class ApiController < ApplicationController
     render :json => {:error => e.message}
   end
 
+  def tags
+    tags = ActsAsTaggableOn::Tagging.includes(:tag).where(context: 'tags').map {|t| t.tag}
+    tags.uniq! {|t| t.name }
+    render :json => {tags: tags}
+  rescue => e
+    render :json => {:error => e.message}
+  end
+
   def api_params
     params.permit(:email, :password)
   end
