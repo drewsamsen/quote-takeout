@@ -42,6 +42,25 @@ class ApiController < ApplicationController
     render :json => {:error => e.message}
   end
 
+  # Get quotes and decorate them with the title and author of their source book
+  def quotes
+    quotes = Quote.tagged_with(params[:tag]).order(:created_at).map(&:attributes)
+    quotes = Quote.tagged_with(t).order(:created_at).map(&:attributes)
+    book_ids = quotes.collect{|q| q['book_id'] }.uniq
+    books = Book.where('id in (?)', book_ids)
+    book_data = {}
+    books.each {|b| book_data[b.id] = b }
+    quotes.each do |q|
+      book_id = q['book_id'].to_i
+      book = book_data[book_id]
+      q['book_name'] = book.name
+      q['book_author'] = book.author
+    end
+    render :json => {quotes: quotes}
+  rescue => e
+    render :json => {:error => e.message}
+  end
+
   def api_params
     params.permit(:email, :password)
   end
