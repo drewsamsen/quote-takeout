@@ -45,7 +45,6 @@ class ApiController < ApplicationController
   # Get quotes and decorate them with the title and author of their source book
   def quotes
     quotes = Quote.tagged_with(params[:tag]).order(:created_at).map(&:attributes)
-    quotes = Quote.tagged_with(t).order(:created_at).map(&:attributes)
     book_ids = quotes.collect{|q| q['book_id'] }.uniq
     books = Book.where('id in (?)', book_ids)
     book_data = {}
