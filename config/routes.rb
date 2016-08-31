@@ -26,6 +26,6 @@ Rails.application.routes.draw do
   get 'api/books' => 'api#books'
   get 'api/books/:id/quotes' => 'api#book_quotes'
   get 'api/tags' => 'api#tags'
-  get 'api/quotes' => 'api#quotes'
+  get 'api/quotes/:tag' => 'api#quotes'
 
 end
