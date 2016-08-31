@@ -4,8 +4,6 @@ class ApiController < ApplicationController
   skip_before_action :verify_authenticity_token
 
   def login
-    puts request.body
-    puts params
     email = params[:email]
     password = params[:password]
     if email.blank? || password.blank?
@@ -19,6 +17,12 @@ class ApiController < ApplicationController
       raise "Invalid password"
     end
     render :json => {:user => @user}
+  rescue => e
+    render :json => {:error => e.message}
+  end
+
+  def books
+    render :json => {:books => Book.all}
   rescue => e
     render :json => {:error => e.message}
   end

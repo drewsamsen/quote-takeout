@@ -23,5 +23,6 @@ Rails.application.routes.draw do
   # ----------- API -------------
 
   post 'api/login' => 'api#login'
+  get 'api/books' => 'api#books'
 
 end
