@@ -28,4 +28,8 @@ Rails.application.routes.draw do
   get 'api/tags' => 'api#tags'
   get 'api/quotes/:tag' => 'api#quotes'
 
+  # ----------- Rails UI -------------
+
+  get 'explore' => 'explore#index'
+
 end
