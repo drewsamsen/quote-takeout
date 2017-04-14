@@ -2,9 +2,5 @@
 
   <p class="body"><%= @quote.body %></p>
 
-  <p class="meta">
-    <%= @book.name %><br/>
-    <%= @book.author %><br/>
-    <a href="/q/<%= @quote.id %>">permalink</a>
-  </p>
+<%= render "explore/meta" %>
 

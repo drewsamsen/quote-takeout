@@ -1,1 +1,6 @@
-<h2><%= @book.name %> <span class="show-soft">ID:<%= @quote.id %></span><a href="/explore" class="btn">Explore All</a><a href="/explore?book=<%= @book.id %>" class="btn">Explore Book</a></h2>
+<h2>
+  <%= @book.name %>
+  <div class="util">
+    Explore <a href="/explore" class="btn">All</a><a href="/explore?book=<%= @book.id %>" class="btn">Book</a>
+  </div>
+</h2>

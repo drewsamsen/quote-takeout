@@ -30,36 +30,40 @@ a {
 }
 
 h2 {
-  font-size: 1.2em;
+  font-size: 1em;
+  font-weight: normal;
   line-height: 32px;
+  border-bottom: 1px solid #e1e1e1;
+  padding-bottom: 15px;
 }
 
 p.body {
   font-size: 1.2em;
   line-height: 1.6em;
-  border-left: 3px solid #e1e1e1;
-  padding-left: 30px;
-  margin: 45px 0 65px 15px;
+  margin: 45px 0 45px 0;
 }
 
 p.meta {
   font-size: 1em;
   line-height: 1.2em;
-  font-style: italic;
+  opacity: 0.8;
+}
+
+.util {
+  float: right;
+  font-family: arial;
+  font-size: 0.6em;
+  line-height: 32px;
+  text-transform: uppercase;
 }
 
 .btn {
-  float: right;
-  font-family: arial;
-  display: block;
-  font-size: 0.6em;
-  line-height: 32px;
+  display: inline-block;
   height: 32px;
   border: 1px solid #e1e1e1;
   padding: 0 10px;
   margin-left: 10px;
   text-decoration: none;
-  text-transform: uppercase;
   font-weight: normal;
 }
 
@@ -70,4 +74,36 @@ p.meta {
 
 .show-soft {
   opacity: 0.4;
+}
+
+.permalink {
+  text-decoration: none;
+  opacity: 0.3;
+}
+
+.permalink:hover {
+  text-decoration: underline;
+  opacity: 0.55;
+}
+
+#footer {
+  display: none;
+  text-align: center;
+  margin: 90px 0 40px;
+  border-top: 1px solid #e1e1e1;
+  padding-top: 10px;
+}
+
+#footer a {
+  text-decoration: none;
+  font-size: 0.6em;
+  text-transform: uppercase;
+  color: #929292;
+  font-family: arial;
+  opacity: 0.6;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+  opacity: 1;
 }
