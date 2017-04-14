@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   delete 'books/:book_id/quotes/:quote_id' => 'quote#destroy'
 
   get 'quotes' => 'quote#index'
+  get 'q/:id' => 'quote#show'
   get 'quotes/:id/tags' => 'quote#tags'
   post 'quotes/:id/tags' => 'quote#tags'
 

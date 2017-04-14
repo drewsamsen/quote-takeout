@@ -1,6 +1,6 @@
 class QuoteController < ApplicationController
 
-  before_filter :get_book, except: [:tags, :index]
+  before_filter :get_book, except: [:tags, :index, :show]
   before_filter :check_admin, only: [:create, :destroy]
   before_filter :get_quote, only: [:tags]
 
@@ -14,6 +14,11 @@ class QuoteController < ApplicationController
       @quotes = Quote.order(:created_at).limit(50)
     end
     respond_with(quotes: @quotes)
+  end
+
+  def show
+    @quote = Quote.find(params[:id])
+    @book = @quote.book
   end
 
   def create
